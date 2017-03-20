@@ -1,23 +1,22 @@
-package hu.bme.aut.mobsoft.lab.mobsoft.ui.main;
+package hu.bme.aut.mobsoft.lab.mobsoft.ui.answers.list;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import javax.inject.Inject;
 
 import hu.bme.aut.mobsoft.lab.mobsoft.MobSoftApplication;
 import hu.bme.aut.mobsoft.lab.mobsoft.R;
 
-public class MainActivity extends AppCompatActivity implements MainScreen {
+public class AnswersActivity extends AppCompatActivity implements AnswersScreen {
 
     @Inject
-    MainPresenter mainPresenter;
+    AnswersPresenter answersPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_answers);
 
         MobSoftApplication.injector.inject(this);
     }
@@ -25,17 +24,12 @@ public class MainActivity extends AppCompatActivity implements MainScreen {
     @Override
     protected void onStart() {
         super.onStart();
-        mainPresenter.attachScreen(this);
+        answersPresenter.attachScreen(this);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        mainPresenter.detachScreen();
-    }
-
-    @Override
-    public void showMessage(String text) {
-        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
+        answersPresenter.detachScreen();
     }
 }
