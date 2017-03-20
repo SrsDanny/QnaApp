@@ -13,4 +13,16 @@ public class QuestionsPresenter extends Presenter<QuestionsScreen> {
     public void detachScreen() {
         super.detachScreen();
     }
+
+    public void searchQuestions(String query) {
+        // Search questions, call showQuestions()
+    }
+
+    public void sortQuestions(/*Sort criteria comes here*/) {
+        // Sort questions, call showQuestions()
+    }
+
+    public void questionSelected(int questionId) {
+        screen.showAnswersFor(questionId);
+    }
 }

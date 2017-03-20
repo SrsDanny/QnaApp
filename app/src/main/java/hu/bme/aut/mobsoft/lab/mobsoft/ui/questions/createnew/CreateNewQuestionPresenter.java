@@ -13,4 +13,9 @@ public class CreateNewQuestionPresenter extends Presenter<CreateNewQuestionScree
     public void detachScreen() {
         super.detachScreen();
     }
+
+    public void createNewQuestion(/*Question question*/) {
+        // Create new question
+        // Call questionCreated or showError
+    };
 }

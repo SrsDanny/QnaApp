@@ -32,4 +32,14 @@ public class AnswersActivity extends AppCompatActivity implements AnswersScreen 
         super.onStop();
         answersPresenter.detachScreen();
     }
+
+    @Override
+    public void showAnswers(/*List<Answer> answers*/) {
+
+    }
+
+    @Override
+    public void showQuestion(/*Question question*/) {
+
+    }
 }

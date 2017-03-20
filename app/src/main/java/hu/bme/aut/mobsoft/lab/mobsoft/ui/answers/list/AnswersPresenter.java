@@ -13,4 +13,8 @@ public class AnswersPresenter extends Presenter<AnswersScreen> {
     public void detachScreen() {
         super.detachScreen();
     }
+
+    public void rateAnswer(/*Rating rating*/) {
+        // Apply rating, refresh answers list
+    }
 }

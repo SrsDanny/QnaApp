@@ -2,6 +2,7 @@ package hu.bme.aut.mobsoft.lab.mobsoft.ui.questions.createnew;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import javax.inject.Inject;
 
@@ -31,5 +32,15 @@ public class CreateNewQuestionActivity extends AppCompatActivity implements Crea
     protected void onStop() {
         super.onStop();
         createNewQuestionPresenter.detachScreen();
+    }
+
+    @Override
+    public void questionCreated() {
+        // Navigate back to Questions view
+    }
+
+    @Override
+    public void showError(String errorMessage) {
+        Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show();
     }
 }
