@@ -16,6 +16,6 @@ public class CreateNewAnswerPresenter extends Presenter<CreateNewAnswerScreen> {
 
     public void createNewAnswer(/*Answer answer*/){
         // Create new answer
-        // Call answerCreated or showError
+        // Call answerCreated or showMessage
     }
 }

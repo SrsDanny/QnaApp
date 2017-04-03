@@ -1,5 +1,6 @@
 package hu.bme.aut.mobsoft.lab.mobsoft.ui.login;
 
+import hu.bme.aut.mobsoft.lab.mobsoft.model.user.UserDetails;
 import hu.bme.aut.mobsoft.lab.mobsoft.ui.Presenter;
 
 public class LoginPresenter extends Presenter<LoginScreen> {
@@ -14,8 +15,8 @@ public class LoginPresenter extends Presenter<LoginScreen> {
         super.detachScreen();
     }
 
-    public void loginUser(/*UserDetails userDetails*/) {
-        // Login the user
-        // Call showError or loginComplete depending on outcome
+    public void loginUser(UserDetails userDetails) {
+        // Login the user (network operation)
+        // Call showMessage or loginComplete depending on outcome
     };
 }

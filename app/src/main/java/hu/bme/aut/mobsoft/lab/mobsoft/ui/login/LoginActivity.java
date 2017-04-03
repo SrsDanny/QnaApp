@@ -35,8 +35,8 @@ public class LoginActivity extends AppCompatActivity implements LoginScreen {
     }
 
     @Override
-    public void showError(String errorMessage) {
-        Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show();
+    public void showMessage(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
