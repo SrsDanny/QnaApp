@@ -19,7 +19,7 @@ public interface Repository {
     List<Question> getQuestions(String query, SortBy sortBy);
 
     long saveAnswer(Answer answer);
-    List<Answer> getAnswersFor(Long id);
+    List<Answer> getAnswersFor(long id);
 
     void rateAnswer(Rating rating);
 }

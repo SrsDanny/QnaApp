@@ -8,9 +8,15 @@ public class Question {
 
     private String title;
     private String description;
-    private int numberOfAnswers;
+    private int numberOfAnswers = 0;
 
     public Question() {
+    }
+
+    public Question(Long id, String title, String description) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
     }
 
     public Long getId() {

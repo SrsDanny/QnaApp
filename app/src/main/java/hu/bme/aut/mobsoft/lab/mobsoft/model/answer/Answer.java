@@ -4,8 +4,8 @@ import com.orm.dsl.Table;
 
 @Table
 public class Answer {
-    private Long id;
-
+    private long id;
+    private long questionId;
     private String title;
     private String description;
     private int rating;
@@ -13,12 +13,28 @@ public class Answer {
     public Answer() {
     }
 
-    public Long getId() {
+    public Answer(long id, long questionId, String title, String description, int rating) {
+        this.id = id;
+        this.questionId = questionId;
+        this.title = title;
+        this.description = description;
+        this.rating = rating;
+    }
+
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
+    }
+
+    public long getQuestionId() {
+        return questionId;
+    }
+
+    public void setQuestionId(long questionId) {
+        this.questionId = questionId;
     }
 
     public String getTitle() {

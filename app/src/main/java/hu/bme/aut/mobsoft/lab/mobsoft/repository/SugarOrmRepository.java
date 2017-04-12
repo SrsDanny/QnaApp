@@ -56,16 +56,29 @@ public class SugarOrmRepository implements Repository {
 
     @Override
     public long saveAnswer(Answer answer) {
-        return 0;
+        return SugarRecord.save(answer);
     }
 
     @Override
-    public List<Answer> getAnswersFor(Long id) {
-        return null;
+    public List<Answer> getAnswersFor(long id) {
+        return Select.from(Answer.class)
+                .where(Condition.prop("questionId").eq(id))
+                .list();
     }
 
     @Override
-    public void rateAnswer(Rating positiveRating) {
-
+    public void rateAnswer(Rating rating) {
+        Answer answer = SugarRecord.findById(Answer.class, rating.getAnswerId());
+        int newRating = answer.getRating();
+        switch (rating.getVote()) {
+            case UPVOTE:
+                newRating = newRating + 1;
+                break;
+            case DOWNVOTE:
+                newRating = newRating - 1;
+                break;
+        }
+        answer.setRating(newRating);
+        SugarRecord.save(answer);
     }
 }
