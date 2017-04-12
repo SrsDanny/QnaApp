@@ -18,23 +18,25 @@ import static hu.bme.aut.mobsoft.lab.mobsoft.MobSoftApplication.injector;
 public class CreateNewQuestionPresenter extends Presenter<CreateNewQuestionScreen> {
 
     @Inject
-    private QuestionsInteractor questionsInteractor;
+    QuestionsInteractor questionsInteractor;
 
     @Inject
-    private EventBus bus;
+    EventBus bus;
 
     @Inject
-    private Executor executor;
+    Executor executor;
 
     @Override
     public void attachScreen(CreateNewQuestionScreen screen) {
         super.attachScreen(screen);
         injector.inject(this);
+        bus.register(this);
     }
 
     @Override
     public void detachScreen() {
         super.detachScreen();
+        bus.unregister(this);
     }
 
     public void createNewQuestion(final Question question) {
@@ -47,7 +49,7 @@ public class CreateNewQuestionPresenter extends Presenter<CreateNewQuestionScree
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(SaveQuestionEvent event) {
+    public void onSaveQuestionEvent(SaveQuestionEvent event) {
         if(event.getThrowable() != null) {
             event.getThrowable().printStackTrace();
             if(screen != null) {

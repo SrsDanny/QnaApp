@@ -18,5 +18,5 @@ public class LoginPresenter extends Presenter<LoginScreen> {
     public void loginUser(UserDetails userDetails) {
         // Login the user (network operation)
         // Call showMessage or loginComplete depending on outcome
-    };
+    }
 }

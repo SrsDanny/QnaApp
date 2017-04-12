@@ -47,10 +47,6 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsScr
         // Display questions
     }
 
-    public void sortByCriteria() {
-        questionsPresenter.sortQuestions(QuestionsPresenter.SortBy.TITLE);
-    }
-
     @Override
     public void showMessage(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();

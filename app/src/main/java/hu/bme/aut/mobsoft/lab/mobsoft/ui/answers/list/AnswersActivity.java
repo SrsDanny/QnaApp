@@ -2,11 +2,16 @@ package hu.bme.aut.mobsoft.lab.mobsoft.ui.answers.list;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Toast;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
 import hu.bme.aut.mobsoft.lab.mobsoft.MobSoftApplication;
 import hu.bme.aut.mobsoft.lab.mobsoft.R;
+import hu.bme.aut.mobsoft.lab.mobsoft.model.answer.Answer;
+import hu.bme.aut.mobsoft.lab.mobsoft.model.question.Question;
 
 public class AnswersActivity extends AppCompatActivity implements AnswersScreen {
 
@@ -34,12 +39,12 @@ public class AnswersActivity extends AppCompatActivity implements AnswersScreen 
     }
 
     @Override
-    public void showAnswers(/*List<Answer> answers*/) {
+    public void showDetails(Question question, List<Answer> answers) {
 
     }
 
     @Override
-    public void showQuestion(/*Question question*/) {
-
+    public void showMessage(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }

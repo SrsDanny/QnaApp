@@ -5,20 +5,21 @@ import android.content.Context;
 import java.util.List;
 
 import hu.bme.aut.mobsoft.lab.mobsoft.model.answer.Answer;
+import hu.bme.aut.mobsoft.lab.mobsoft.model.answer.Rating;
 import hu.bme.aut.mobsoft.lab.mobsoft.model.question.Question;
+import hu.bme.aut.mobsoft.lab.mobsoft.model.question.SortBy;
 
 public interface Repository {
 
     void open(Context context);
-
     void close();
 
-    Long saveQuestion(Question question);
-    Question getQuestion(Long id);
-    List<Question> getQuestions();
-    List<Question> searchQuestions(String query);
+    long saveQuestion(Question question);
+    Question getQuestion(long id);
+    List<Question> getQuestions(String query, SortBy sortBy);
 
-    void saveAnswer(Answer answer);
-    List<Answer> getAnswersForQuestion(Long id);
-    void rateAnswer(boolean positiveRating);
+    long saveAnswer(Answer answer);
+    List<Answer> getAnswersFor(Long id);
+
+    void rateAnswer(Rating rating);
 }

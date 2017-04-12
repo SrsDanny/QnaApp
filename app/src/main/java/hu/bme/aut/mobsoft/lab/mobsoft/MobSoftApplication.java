@@ -27,4 +27,11 @@ public class MobSoftApplication extends Application {
         injector.inject(this);
         repository.open(getApplicationContext());
     }
+
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+
+        repository.close();
+    }
 }

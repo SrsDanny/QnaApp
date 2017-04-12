@@ -35,8 +35,8 @@ public class CreateNewQuestionActivity extends AppCompatActivity implements Crea
     }
 
     @Override
-    public void questionCreated() {
-        // Navigate back to Questions view
+    public void questionCreated(Long id) {
+        // Navigate to question details page
     }
 
     @Override
