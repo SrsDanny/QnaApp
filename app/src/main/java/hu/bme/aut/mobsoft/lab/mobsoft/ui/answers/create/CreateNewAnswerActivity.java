@@ -1,4 +1,4 @@
-package hu.bme.aut.mobsoft.lab.mobsoft.ui.questions.createnew;
+package hu.bme.aut.mobsoft.lab.mobsoft.ui.answers.create;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,15 +9,15 @@ import javax.inject.Inject;
 import hu.bme.aut.mobsoft.lab.mobsoft.MobSoftApplication;
 import hu.bme.aut.mobsoft.lab.mobsoft.R;
 
-public class CreateNewQuestionActivity extends AppCompatActivity implements CreateNewQuestionScreen {
+public class CreateNewAnswerActivity extends AppCompatActivity implements CreateNewAnswerScreen {
 
     @Inject
-    CreateNewQuestionPresenter createNewQuestionPresenter;
+    CreateNewAnswerPresenter createNewAnswerPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_new_question);
+        setContentView(R.layout.activity_create_new_answer);
 
         MobSoftApplication.injector.inject(this);
     }
@@ -25,22 +25,22 @@ public class CreateNewQuestionActivity extends AppCompatActivity implements Crea
     @Override
     protected void onStart() {
         super.onStart();
-        createNewQuestionPresenter.attachScreen(this);
+        createNewAnswerPresenter.attachScreen(this);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        createNewQuestionPresenter.detachScreen();
+        createNewAnswerPresenter.detachScreen();
     }
 
     @Override
-    public void questionCreated(Long id) {
-        // Navigate to question details page
+    public void answerCreated() {
+        // Navigate back to Answers view
     }
 
     @Override
-    public void showMessage(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    public void showMessage(String errorMessage) {
+        Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show();
     }
 }

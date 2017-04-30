@@ -1,4 +1,4 @@
-package hu.bme.aut.mobsoft.lab.mobsoft.ui.answers.createnew;
+package hu.bme.aut.mobsoft.lab.mobsoft.ui.answers.create;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

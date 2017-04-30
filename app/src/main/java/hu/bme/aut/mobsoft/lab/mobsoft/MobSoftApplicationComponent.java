@@ -7,11 +7,11 @@ import hu.bme.aut.mobsoft.lab.mobsoft.interactor.InteractorModule;
 import hu.bme.aut.mobsoft.lab.mobsoft.interactor.question.QuestionsInteractor;
 import hu.bme.aut.mobsoft.lab.mobsoft.repository.RepositoryModule;
 import hu.bme.aut.mobsoft.lab.mobsoft.ui.UIModule;
-import hu.bme.aut.mobsoft.lab.mobsoft.ui.answers.createnew.CreateNewAnswerActivity;
+import hu.bme.aut.mobsoft.lab.mobsoft.ui.answers.create.CreateNewAnswerActivity;
 import hu.bme.aut.mobsoft.lab.mobsoft.ui.answers.list.AnswersActivity;
 import hu.bme.aut.mobsoft.lab.mobsoft.ui.login.LoginActivity;
-import hu.bme.aut.mobsoft.lab.mobsoft.ui.questions.createnew.CreateNewQuestionActivity;
-import hu.bme.aut.mobsoft.lab.mobsoft.ui.questions.createnew.CreateNewQuestionPresenter;
+import hu.bme.aut.mobsoft.lab.mobsoft.ui.questions.create.CreateNewQuestionActivity;
+import hu.bme.aut.mobsoft.lab.mobsoft.ui.questions.create.CreateNewQuestionPresenter;
 import hu.bme.aut.mobsoft.lab.mobsoft.ui.questions.list.QuestionsActivity;
 import hu.bme.aut.mobsoft.lab.mobsoft.ui.questions.list.QuestionsPresenter;
 

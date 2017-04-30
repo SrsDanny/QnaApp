@@ -23,17 +23,16 @@
             android:name="DOMAIN_PACKAGE_NAME"
             android:value="hu.bme.aut.mobsoft.mobsoftlab.model"/>
 
-        <activity android:name=".ui.login.LoginActivity">
+        <activity android:name=".ui.questions.list.QuestionsActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.questions.createnew.CreateNewQuestionActivity" />
-        <activity android:name=".ui.questions.list.QuestionsActivity" />
+        <activity android:name=".ui.questions.create.CreateNewQuestionActivity" />
         <activity android:name=".ui.answers.list.AnswersActivity" />
-        <activity android:name=".ui.answers.createnew.CreateNewAnswerActivity" />
+        <activity android:name=".ui.answers.create.CreateNewAnswerActivity" />
     </application>
 
 </manifest>

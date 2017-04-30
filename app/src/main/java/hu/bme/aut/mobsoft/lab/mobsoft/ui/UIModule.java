@@ -11,10 +11,10 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import hu.bme.aut.mobsoft.lab.mobsoft.ui.answers.createnew.CreateNewAnswerPresenter;
+import hu.bme.aut.mobsoft.lab.mobsoft.ui.answers.create.CreateNewAnswerPresenter;
 import hu.bme.aut.mobsoft.lab.mobsoft.ui.answers.list.AnswersPresenter;
 import hu.bme.aut.mobsoft.lab.mobsoft.ui.login.LoginPresenter;
-import hu.bme.aut.mobsoft.lab.mobsoft.ui.questions.createnew.CreateNewQuestionPresenter;
+import hu.bme.aut.mobsoft.lab.mobsoft.ui.questions.create.CreateNewQuestionPresenter;
 import hu.bme.aut.mobsoft.lab.mobsoft.ui.questions.list.QuestionsPresenter;
 
 @Module
