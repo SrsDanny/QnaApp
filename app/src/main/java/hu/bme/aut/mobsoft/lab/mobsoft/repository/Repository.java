@@ -17,9 +17,11 @@ public interface Repository {
     long saveQuestion(Question question);
     Question getQuestion(long id);
     List<Question> getQuestions(String query, SortBy sortBy);
+    void saveOrReplaceQuestions(List<Question> questions);
 
-    long saveAnswer(Answer answer);
+    void saveAnswer(Answer answer);
     List<Answer> getAnswersFor(long id);
+    void saveOrReplaceAnswers(List<Answer> answers);
 
     void rateAnswer(Rating rating);
 }

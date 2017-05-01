@@ -47,6 +47,7 @@ public class MemoryRepository implements Repository {
         final long newId = maxId + 1;
 
         question.setId(newId);
+        questions.add(question);
         return newId;
     }
 
@@ -102,7 +103,35 @@ public class MemoryRepository implements Repository {
     }
 
     @Override
-    public long saveAnswer(Answer answer) {
+    public void saveOrReplaceQuestions(List<Question> newQuestions) {
+        for(Question newQuestion : newQuestions) {
+            boolean inserted = false;
+            for (int i = 0; i < questions.size(); ++i) {
+                if(questions.get(i).equals(newQuestion)){
+                    questions.set(i, newQuestion);
+                    inserted = true;
+                    break;
+                }
+            }
+            if(!inserted){
+                questions.add(newQuestion);
+            }
+        }
+    }
+
+    @Override
+    public void saveAnswer(Answer answer) {
+        boolean found = false;
+        for(Question question : questions){
+            if(question.getId() == answer.getQuestionId()){
+                question.increaseNumberOfAnswers();
+                found = true;
+                break;
+            }
+        }
+        if(!found)
+            throw new IllegalArgumentException("Question could not be found for answer!");
+
         final long maxId = Collections.max(answers, new Comparator<Answer>() {
             @Override
             public int compare(Answer left, Answer right) {
@@ -112,7 +141,7 @@ public class MemoryRepository implements Repository {
         final long newId = maxId + 1;
 
         answer.setId(newId);
-        return newId;
+        answers.add(answer);
     }
 
     @Override
@@ -124,6 +153,23 @@ public class MemoryRepository implements Repository {
             }
         }
         return returnAnswers;
+    }
+
+    @Override
+    public void saveOrReplaceAnswers(List<Answer> newAnswers) {
+        for(Answer newAnswer : newAnswers){
+            boolean inserted = false;
+            for (int i = 0; i < answers.size(); i++) {
+                if(answers.get(i).equals(newAnswer)){
+                    answers.set(i, newAnswer);
+                    inserted = true;
+                    break;
+                }
+            }
+            if(!inserted){
+                answers.add(newAnswer);
+            }
+        }
     }
 
     @Override

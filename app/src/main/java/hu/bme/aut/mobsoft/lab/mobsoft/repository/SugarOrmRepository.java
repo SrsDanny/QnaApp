@@ -7,7 +7,9 @@ import com.orm.SugarRecord;
 import com.orm.query.Condition;
 import com.orm.query.Select;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import hu.bme.aut.mobsoft.lab.mobsoft.model.answer.Answer;
 import hu.bme.aut.mobsoft.lab.mobsoft.model.answer.Rating;
@@ -55,8 +57,18 @@ public class SugarOrmRepository implements Repository {
     }
 
     @Override
-    public long saveAnswer(Answer answer) {
-        return SugarRecord.save(answer);
+    public void saveOrReplaceQuestions(List<Question> questions) {
+        SugarRecord.saveInTx(questions);
+    }
+
+    @Override
+    public void saveAnswer(Answer answer) {
+        Question question = SugarRecord.findById(Question.class, answer.getQuestionId());
+        question.increaseNumberOfAnswers();
+        ArrayList<Object> objectsToSave = new ArrayList<>(2);
+        objectsToSave.add(question);
+        objectsToSave.add(answer);
+        SugarRecord.saveInTx(objectsToSave);
     }
 
     @Override
@@ -64,6 +76,11 @@ public class SugarOrmRepository implements Repository {
         return Select.from(Answer.class)
                 .where(Condition.prop("questionId").eq(id))
                 .list();
+    }
+
+    @Override
+    public void saveOrReplaceAnswers(List<Answer> answers) {
+        SugarRecord.saveInTx(answers);
     }
 
     @Override

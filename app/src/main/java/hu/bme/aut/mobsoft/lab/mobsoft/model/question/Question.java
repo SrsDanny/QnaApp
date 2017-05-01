@@ -6,6 +6,7 @@ import com.orm.dsl.Table;
 public class Question {
     private Long id;
 
+    private String userName;
     private String title;
     private String description;
     private int numberOfAnswers = 0;
@@ -17,6 +18,16 @@ public class Question {
         this.id = id;
         this.title = title;
         this.description = description;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Question question = (Question) o;
+
+        return id != null ? id.equals(question.id) : question.id == null;
     }
 
     public Long getId() {
@@ -49,5 +60,15 @@ public class Question {
 
     public void setNumberOfAnswers(int numberOfAnswers) {
         this.numberOfAnswers = numberOfAnswers;
+    }
+
+    public void increaseNumberOfAnswers() { ++numberOfAnswers; }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 }

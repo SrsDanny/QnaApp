@@ -45,10 +45,6 @@ public class QuestionsPresenter extends Presenter<QuestionsScreen> {
         bus.unregister(this);
     }
 
-    public void questionSelected(int questionId) {
-        screen.showAnswersFor(questionId);
-    }
-
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onGetQuestionsEvent(GetQuestionsEvent event) {
         if(event.getThrowable() != null) {
