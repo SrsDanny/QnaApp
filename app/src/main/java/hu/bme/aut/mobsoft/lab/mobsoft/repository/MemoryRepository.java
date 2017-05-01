@@ -145,7 +145,7 @@ public class MemoryRepository implements Repository {
     }
 
     @Override
-    public List<Answer> getAnswersFor(long id) {
+    public List<Answer> getAnswersForId(long id) {
         List<Answer> returnAnswers = new ArrayList<>();
         for(Answer answer : answers) {
             if(answer.getQuestionId() == id) {

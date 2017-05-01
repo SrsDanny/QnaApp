@@ -47,7 +47,7 @@ public class AnswersInteractor {
         GetDetailsEvent event = new GetDetailsEvent();
         try {
             final Question question = repository.getQuestion(id);
-            final List<Answer> answers = repository.getAnswersFor(id);
+            final List<Answer> answers = repository.getAnswersForId(id);
             event.setQuestion(question);
             event.setAnswers(answers);
         } catch (Exception e) {

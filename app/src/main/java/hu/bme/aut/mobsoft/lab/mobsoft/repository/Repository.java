@@ -20,7 +20,7 @@ public interface Repository {
     void saveOrReplaceQuestions(List<Question> questions);
 
     void saveAnswer(Answer answer);
-    List<Answer> getAnswersFor(long id);
+    List<Answer> getAnswersForId(long id);
     void saveOrReplaceAnswers(List<Answer> answers);
 
     void rateAnswer(Rating rating);
