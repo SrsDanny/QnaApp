@@ -25,8 +25,7 @@ public class AnswersInteractor {
     public void saveAnswer(Answer answer){
         SaveAnswerEvent event = new SaveAnswerEvent();
         try {
-            long id = repository.saveAnswer(answer);
-            event.setAnswerId(id);
+            repository.saveAnswer(answer);
         } catch (Exception e) {
             event.setThrowable(e);
         }

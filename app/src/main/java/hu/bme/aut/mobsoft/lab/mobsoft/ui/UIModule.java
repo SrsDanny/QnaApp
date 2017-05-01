@@ -13,7 +13,6 @@ import dagger.Module;
 import dagger.Provides;
 import hu.bme.aut.mobsoft.lab.mobsoft.ui.answers.create.CreateNewAnswerPresenter;
 import hu.bme.aut.mobsoft.lab.mobsoft.ui.answers.list.AnswersPresenter;
-import hu.bme.aut.mobsoft.lab.mobsoft.ui.login.LoginPresenter;
 import hu.bme.aut.mobsoft.lab.mobsoft.ui.questions.create.CreateNewQuestionPresenter;
 import hu.bme.aut.mobsoft.lab.mobsoft.ui.questions.list.QuestionsPresenter;
 
@@ -28,12 +27,6 @@ public class UIModule {
     @Provides
     public Context provideContext() {
         return context;
-    }
-
-    @Provides
-    @Singleton
-    public LoginPresenter provideLoginPresenter() {
-        return new LoginPresenter();
     }
 
     @Provides
