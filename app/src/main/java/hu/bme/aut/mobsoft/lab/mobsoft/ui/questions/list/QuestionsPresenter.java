@@ -45,6 +45,15 @@ public class QuestionsPresenter extends Presenter<QuestionsScreen> {
         bus.unregister(this);
     }
 
+    public void getQuestions() {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                questionsInteractor.getQuestions(query, sortBy);
+            }
+        });
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onGetQuestionsEvent(GetQuestionsEvent event) {
         if(event.getThrowable() != null) {
@@ -56,15 +65,6 @@ public class QuestionsPresenter extends Presenter<QuestionsScreen> {
             List<Question> questions = event.getQuestions();
             screen.showQuestions(questions);
         }
-    }
-
-    public void getQuestions() {
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
-                questionsInteractor.getQuestions(query, sortBy);
-            }
-        });
     }
 
     public String getQuery() {

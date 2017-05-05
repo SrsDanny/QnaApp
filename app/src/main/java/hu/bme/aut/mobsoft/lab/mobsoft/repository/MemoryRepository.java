@@ -22,13 +22,30 @@ public class MemoryRepository implements Repository {
         questions = new ArrayList<>();
         answers = new ArrayList<>();
 
-        questions.add(new Question(1L, "How to Java?", "I need to know how to Java! Pls help!"));
+        Question question = new Question(1L, "How to Java?", "I need to know how to Java! Pls help!");
+        questions.add(question);
         answers.add(new Answer(1L, 1L, "Why would you?", "It's a #$%@ language, learn C!", 22));
         answers.add(new Answer(2L, 1L, "Lol, just don't...", "Learn Scala or some other real language you moron!", -3));
+        question.setNumberOfAnswers(2);
 
-        questions.add(new Question(2L, "How to Android?", "I literally have no idea how to make apps. Can you tell me please how do I begin?"));
+        question = new Question(2L, "How to Android?", "I literally have no idea how to make apps. Can you tell me please how do I begin?");
+        questions.add(question);
         answers.add(new Answer(3L, 2L, "Learn Java first", "Learn to code in Java then move on to Android and...", -1));
         answers.add(new Answer(4L, 2L, "One does not simply...", "One does not simply learn to make Android apps.", 42));
+        question.setNumberOfAnswers(2);
+
+        questions.add(new Question(3L, "Sample question with an unreasonably long title, that should be cut down to fit in a single line, so this part should not even be visible", "Sample description"));
+        questions.add(new Question(4L, "Sample question", "Sample description"));
+        questions.add(new Question(5L, "Sample question", "Sample description"));
+        questions.add(new Question(6L, "Sample question", "Sample description"));
+        questions.add(new Question(7L, "Sample question", "Sample description"));
+        questions.add(new Question(8L, "Sample question", "Sample description"));
+        questions.add(new Question(9L, "Sample question", "Sample description"));
+        questions.add(new Question(10L, "Sample question", "Sample description"));
+        questions.add(new Question(11L, "Sample question", "Sample description"));
+        questions.add(new Question(12L, "Sample question", "Sample description"));
+        questions.add(new Question(13L, "Sample question", "Sample description"));
+        questions.add(new Question(14L, "Sample question", "Sample description"));
     }
 
     @Override

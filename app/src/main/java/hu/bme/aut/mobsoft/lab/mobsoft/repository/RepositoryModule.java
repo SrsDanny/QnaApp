@@ -11,6 +11,6 @@ public class RepositoryModule {
     @Singleton
     @Provides
     public Repository provideRepository() {
-        return new SugarOrmRepository();
+        return new MemoryRepository();
     }
 }

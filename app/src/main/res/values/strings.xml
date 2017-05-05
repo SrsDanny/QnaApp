@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Mobsoft</string>
+    <string name="ipsum_1">Lorem ipsum dolor sit amet?</string>
+    <string name="ipsum_2">Mauris pulvinar quam eget enim consequat bibendum. Quisque fermentum orci ipsum, fermentum congue tellus finibus nec.</string>
+    <string name="answers_icon_description">Answers icon</string>
+    <string name="zero">0</string>
 </resources>
