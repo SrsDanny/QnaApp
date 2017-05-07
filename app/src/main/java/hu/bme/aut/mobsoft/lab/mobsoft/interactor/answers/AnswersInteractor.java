@@ -14,6 +14,8 @@ import hu.bme.aut.mobsoft.lab.mobsoft.model.answer.Rating;
 import hu.bme.aut.mobsoft.lab.mobsoft.model.question.Question;
 import hu.bme.aut.mobsoft.lab.mobsoft.repository.Repository;
 
+import static hu.bme.aut.mobsoft.lab.mobsoft.MobSoftApplication.injector;
+
 public class AnswersInteractor {
 
     @Inject
@@ -21,6 +23,10 @@ public class AnswersInteractor {
 
     @Inject
     EventBus bus;
+
+    public AnswersInteractor() {
+        injector.inject(this);
+    }
 
     public void saveAnswer(Answer answer){
         SaveAnswerEvent event = new SaveAnswerEvent();

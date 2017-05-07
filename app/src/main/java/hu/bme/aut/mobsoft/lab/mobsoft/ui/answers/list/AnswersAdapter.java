@@ -1,4 +1,4 @@
-package hu.bme.aut.mobsoft.lab.mobsoft.ui.questions.list;
+package hu.bme.aut.mobsoft.lab.mobsoft.ui.answers.list;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,42 +12,42 @@ import java.util.Locale;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import hu.bme.aut.mobsoft.lab.mobsoft.R;
-import hu.bme.aut.mobsoft.lab.mobsoft.model.question.Question;
+import hu.bme.aut.mobsoft.lab.mobsoft.model.answer.Answer;
 
-class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.ViewHolder> {
-    private List<Question> questions;
+public class AnswersAdapter extends RecyclerView.Adapter<AnswersAdapter.ViewHolder> {
+    private List<Answer> answers;
     private View.OnClickListener listener;
 
-    QuestionsAdapter(List<Question> questions, View.OnClickListener listener) {
-        this.questions = questions;
+    public AnswersAdapter(List<Answer> answers, View.OnClickListener listener) {
+        this.answers = answers;
         this.listener = listener;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.list_row_question, parent, false);
+                .inflate(R.layout.list_row_answer, parent, false);
         v.setOnClickListener(listener);
         return new ViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        final Question question = questions.get(position);
-        holder.title.setText(question.getTitle());
-        holder.description.setText(question.getDescription());
-        holder.answersCount.setText(String.format(Locale.getDefault(), "%d", question.getNumberOfAnswers()));
+        final Answer answer = answers.get(position);
+        holder.title.setText(answer.getTitle());
+        holder.description.setText(answer.getDescription());
+        holder.rating.setText(String.format(Locale.getDefault() ,"%d", answer.getRating()));
     }
 
     @Override
     public int getItemCount() {
-        return questions.size();
+        return answers.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.title) TextView title;
-        @BindView(R.id.description) TextView description;
-        @BindView(R.id.answersCount) TextView answersCount;
+        @BindView(R.id.answer_title) TextView title;
+        @BindView(R.id.answer_description) TextView description;
+        @BindView(R.id.answer_rating) TextView rating;
 
         ViewHolder(View itemView) {
             super(itemView);

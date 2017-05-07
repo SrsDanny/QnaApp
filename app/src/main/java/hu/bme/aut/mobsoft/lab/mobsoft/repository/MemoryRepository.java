@@ -34,7 +34,26 @@ public class MemoryRepository implements Repository {
         answers.add(new Answer(4L, 2L, "One does not simply...", "One does not simply learn to make Android apps.", 42));
         question.setNumberOfAnswers(2);
 
-        questions.add(new Question(3L, "Sample question with an unreasonably long title, that should be cut down to fit in a single line, so this part should not even be visible", "Sample description"));
+        question = new Question(3L, "Sample question with an unreasonably long title, that should be cut down to fit in a single line, so this part should not even be visible", "Sample description");
+        questions.add(question);
+        answers.add(new Answer(5L, 3L, "Sample answer title.", "Sample answer description.", 42));
+        answers.add(new Answer(6L, 3L, "Sample answer title.", "Sample answer description.", 42));
+        answers.add(new Answer(7L, 3L, "Sample answer title.", "Sample answer description.", 42));
+        answers.add(new Answer(8L, 3L, "Sample answer title.", "Sample answer description.", 42));
+        answers.add(new Answer(9L, 3L, "Sample answer title.", "Sample answer description.", 42));
+        answers.add(new Answer(10L, 3L, "Sample answer title.", "Sample answer description.", 42));
+        answers.add(new Answer(11L, 3L, "Sample answer title.", "Sample answer description.", 42));
+        answers.add(new Answer(12L, 3L, "Sample answer title.", "Sample answer description.", 42));
+        answers.add(new Answer(13L, 3L, "Sample answer title.", "Sample answer description.", 42));
+        answers.add(new Answer(14L, 3L, "Sample answer title.", "Sample answer description.", 42));
+        answers.add(new Answer(15L, 3L, "Sample answer title.", "Sample answer description.", 42));
+        answers.add(new Answer(16, 3L, "Sample answer title.", "Sample answer description.", 42));
+        answers.add(new Answer(17L, 3L, "Sample answer title.", "Sample answer description.", 42));
+        answers.add(new Answer(18L, 3L, "Sample answer title.", "Sample answer description.", 42));
+        answers.add(new Answer(18L, 3L, "Sample answer title.", "Sample answer description.", 42));
+        answers.add(new Answer(19L, 3L, "Sample answer title.", "Sample answer description.", 42));
+        question.setNumberOfAnswers(16);
+
         questions.add(new Question(4L, "Sample question", "Sample description"));
         questions.add(new Question(5L, "Sample question", "Sample description"));
         questions.add(new Question(6L, "Sample question", "Sample description"));

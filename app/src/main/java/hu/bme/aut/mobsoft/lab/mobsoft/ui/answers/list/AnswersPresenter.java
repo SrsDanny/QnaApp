@@ -14,6 +14,8 @@ import hu.bme.aut.mobsoft.lab.mobsoft.interactor.answers.event.RatingAppliedEven
 import hu.bme.aut.mobsoft.lab.mobsoft.model.answer.Rating;
 import hu.bme.aut.mobsoft.lab.mobsoft.ui.Presenter;
 
+import static hu.bme.aut.mobsoft.lab.mobsoft.MobSoftApplication.injector;
+
 public class AnswersPresenter extends Presenter<AnswersScreen> {
 
     @Inject
@@ -28,11 +30,14 @@ public class AnswersPresenter extends Presenter<AnswersScreen> {
     @Override
     public void attachScreen(AnswersScreen screen) {
         super.attachScreen(screen);
+        injector.inject(this);
+        bus.register(this);
     }
 
     @Override
     public void detachScreen() {
         super.detachScreen();
+        bus.unregister(this);
     }
 
     public void rateAnswer(final Rating rating) {
@@ -72,7 +77,8 @@ public class AnswersPresenter extends Presenter<AnswersScreen> {
                 screen.showMessage("error: " + event.getThrowable().getLocalizedMessage());
             }
         } else if(screen != null) {
-            screen.showDetails(event.getQuestion(), event.getAnswers());
+            screen.showQuestion(event.getQuestion());
+            screen.showAnswers(event.getAnswers());
         }
     }
 }
