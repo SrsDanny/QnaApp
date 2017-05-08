@@ -74,7 +74,7 @@ public class SugarOrmRepository implements Repository {
     @Override
     public List<Answer> getAnswersForId(long id) {
         return Select.from(Answer.class)
-                .where(Condition.prop("questionId").eq(id))
+                .where(Condition.prop("question_id").eq(id))
                 .list();
     }
 

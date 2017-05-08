@@ -1,5 +1,6 @@
 package hu.bme.aut.mobsoft.lab.mobsoft.ui.answers.list;
 
+import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,7 +37,30 @@ public class AnswersAdapter extends RecyclerView.Adapter<AnswersAdapter.ViewHold
         final Answer answer = answers.get(position);
         holder.title.setText(answer.getTitle());
         holder.description.setText(answer.getDescription());
-        holder.rating.setText(String.format(Locale.getDefault() ,"%d", answer.getRating()));
+
+        if (answer.getRating() != 0) {
+            holder.rating.setText(String.valueOf(answer.getRating()));
+        } else {
+            holder.rating.setText("");
+        }
+
+        final int icon;
+        if(answer.getRating() > 0) {
+            icon = R.drawable.ic_done_black_24dp;
+        } else if(answer.getRating() < 0) {
+            icon = R.drawable.ic_clear_black_24dp;
+        } else {
+            icon = 0;
+        }
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            holder.rating.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                    0, 0, icon, 0);
+        } else {
+            holder.rating.setCompoundDrawablesWithIntrinsicBounds(
+                    0, 0, icon, 0);
+        }
+
     }
 
     @Override

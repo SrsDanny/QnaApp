@@ -65,7 +65,7 @@ public class AnswersPresenter extends Presenter<AnswersScreen> {
                 screen.showMessage("error: " + event.getThrowable().getLocalizedMessage());
             }
         } else if(screen != null) {
-            screen.showMessage("Answer rated");
+            screen.ratingSuccessful(event.getRating());
         }
     }
 

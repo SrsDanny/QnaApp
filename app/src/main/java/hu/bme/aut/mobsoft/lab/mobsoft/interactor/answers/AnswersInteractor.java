@@ -42,6 +42,7 @@ public class AnswersInteractor {
         RatingAppliedEvent event = new RatingAppliedEvent();
         try {
             repository.rateAnswer(rating);
+            event.setRating(rating);
         } catch (Exception e) {
             event.setThrowable(e);
         }

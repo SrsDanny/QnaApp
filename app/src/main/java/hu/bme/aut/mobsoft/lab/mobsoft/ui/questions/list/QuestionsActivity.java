@@ -1,6 +1,7 @@
 package hu.bme.aut.mobsoft.lab.mobsoft.ui.questions.list;
 
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
@@ -8,8 +9,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
@@ -25,20 +24,24 @@ import butterknife.ButterKnife;
 import hu.bme.aut.mobsoft.lab.mobsoft.MobSoftApplication;
 import hu.bme.aut.mobsoft.lab.mobsoft.R;
 import hu.bme.aut.mobsoft.lab.mobsoft.model.question.Question;
+import hu.bme.aut.mobsoft.lab.mobsoft.ui.answers.create.CreateNewAnswerActivity;
 import hu.bme.aut.mobsoft.lab.mobsoft.ui.answers.list.AnswersActivity;
+import hu.bme.aut.mobsoft.lab.mobsoft.ui.questions.create.CreateNewQuestionActivity;
 
 public class QuestionsActivity extends AppCompatActivity implements QuestionsScreen {
 
     @Inject
     QuestionsPresenter questionsPresenter;
 
-    @BindView(R.id.questionsRecyclerView) RecyclerView questionsRecyclerView;
+    @BindView(R.id.questions_recyclerview) RecyclerView questionsRecyclerView;
     private QuestionsAdapter questionsAdapter;
     private List<Question> questionList;
 
     @BindView(R.id.toolbar) Toolbar toolbar;
 
     private Spinner sortSpinner;
+
+    @BindView(R.id.create_new_question_fab) FloatingActionButton createNewQuestionButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +72,15 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsScr
                 new DividerItemDecoration(questionsRecyclerView.getContext(),
                         linearLayoutManager.getOrientation());
         questionsRecyclerView.addItemDecoration(dividerItemDecoration);
+
+        createNewQuestionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(QuestionsActivity.this, CreateNewQuestionActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

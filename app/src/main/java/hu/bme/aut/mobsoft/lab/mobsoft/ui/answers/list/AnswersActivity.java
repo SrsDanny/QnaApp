@@ -1,12 +1,15 @@
 package hu.bme.aut.mobsoft.lab.mobsoft.ui.answers.list;
 
+import android.app.DialogFragment;
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,13 +24,16 @@ import butterknife.ButterKnife;
 import hu.bme.aut.mobsoft.lab.mobsoft.MobSoftApplication;
 import hu.bme.aut.mobsoft.lab.mobsoft.R;
 import hu.bme.aut.mobsoft.lab.mobsoft.model.answer.Answer;
+import hu.bme.aut.mobsoft.lab.mobsoft.model.answer.Rating;
 import hu.bme.aut.mobsoft.lab.mobsoft.model.question.Question;
+import hu.bme.aut.mobsoft.lab.mobsoft.ui.answers.create.CreateNewAnswerActivity;
 
-public class AnswersActivity extends AppCompatActivity implements AnswersScreen {
+public class AnswersActivity extends AppCompatActivity implements AnswersScreen,
+        RateDialogFragment.RateDialogListener {
 
     public static final String QUESTION_ID_KEY = "questionId";
 
-    long questionId;
+    private long questionId;
 
     @Inject
     AnswersPresenter answersPresenter;
@@ -37,6 +43,7 @@ public class AnswersActivity extends AppCompatActivity implements AnswersScreen 
     @BindView(R.id.question_title) TextView questionTitle;
     @BindView(R.id.question_description) TextView questionDescription;
     @BindView(R.id.answers_count) TextView answersCountText;
+    @BindView(R.id.create_new_answer_fab) FloatingActionButton createNewAnswerButton;
 
     private List<Answer> answerList;
     private AnswersAdapter answersAdapter;
@@ -60,13 +67,34 @@ public class AnswersActivity extends AppCompatActivity implements AnswersScreen 
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         answersRecyclerView.setLayoutManager(linearLayoutManager);
         answerList = new ArrayList<>();
-        answersAdapter = new AnswersAdapter(answerList, null);
+        answersAdapter = new AnswersAdapter(answerList, new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final int position = answersRecyclerView.getChildLayoutPosition(view);
+                final long answerId = answerList.get(position).getId();
+                DialogFragment dialog = new RateDialogFragment();
+                Bundle args = new Bundle();
+                args.putLong(RateDialogFragment.ANSWER_ID_KEY, answerId);
+                dialog.setArguments(args);
+                dialog.show(getFragmentManager(), "rating");
+            }
+        });
         answersRecyclerView.setAdapter(answersAdapter);
 
         final DividerItemDecoration dividerItemDecoration =
                 new DividerItemDecoration(answersRecyclerView.getContext(),
                         linearLayoutManager.getOrientation());
         answersRecyclerView.addItemDecoration(dividerItemDecoration);
+
+        createNewAnswerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AnswersActivity.this, CreateNewAnswerActivity.class);
+                intent.putExtra(CreateNewAnswerActivity.QUESTION_ID_KEY, questionId);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -107,7 +135,26 @@ public class AnswersActivity extends AppCompatActivity implements AnswersScreen 
     }
 
     @Override
+    public void ratingSuccessful(Rating rating) {
+        int pos;
+        for (pos = 0; pos < answerList.size(); pos++) {
+            Answer answer = answerList.get(pos);
+            if (answer.getId() == rating.getAnswerId()) {
+                answer.addRating(rating.getVote());
+                break;
+            }
+        }
+        answersAdapter.notifyItemChanged(pos);
+        showMessage("Answer rated");
+    }
+
+    @Override
     public void showMessage(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void ratingReceived(Rating rating) {
+        answersPresenter.rateAnswer(rating);
     }
 }

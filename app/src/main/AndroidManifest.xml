@@ -21,7 +21,7 @@
             android:value="true"/>
         <meta-data
             android:name="DOMAIN_PACKAGE_NAME"
-            android:value="hu.bme.aut.mobsoft.mobsoftlab.model"/>
+            android:value="hu.bme.aut.mobsoft.lab.mobsoft.model"/>
 
         <activity android:name=".ui.questions.list.QuestionsActivity">
             <intent-filter>

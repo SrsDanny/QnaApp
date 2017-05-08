@@ -10,6 +10,14 @@ public class Rating {
     private VoteType vote;
     private long answerId;
 
+    public Rating() {
+    }
+
+    public Rating(VoteType vote, long answerId) {
+        this.vote = vote;
+        this.answerId = answerId;
+    }
+
     public VoteType getVote() {
         return vote;
     }

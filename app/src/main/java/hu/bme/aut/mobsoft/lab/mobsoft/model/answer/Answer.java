@@ -4,9 +4,9 @@ import com.orm.dsl.Table;
 
 @Table
 public class Answer {
-    private long id;
+    private Long id = null;
+
     private long questionId;
-    private String userName;
     private String title;
     private String description;
     private int rating;
@@ -14,12 +14,10 @@ public class Answer {
     public Answer() {
     }
 
-    public Answer(long id, long questionId, String title, String description, int rating) {
-        this.id = id;
+    public Answer(long questionId, String title, String description) {
         this.questionId = questionId;
         this.title = title;
         this.description = description;
-        this.rating = rating;
     }
 
     @Override
@@ -72,11 +70,14 @@ public class Answer {
         this.rating = rating;
     }
 
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void addRating(Rating.VoteType vote){
+        switch (vote) {
+            case UPVOTE:
+                rating++;
+                break;
+            case DOWNVOTE:
+                rating--;
+                break;
+        }
     }
 }

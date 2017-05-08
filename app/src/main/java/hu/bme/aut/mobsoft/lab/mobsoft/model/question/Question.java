@@ -4,9 +4,8 @@ import com.orm.dsl.Table;
 
 @Table
 public class Question {
-    private Long id;
+    private Long id = null;
 
-    private String userName;
     private String title;
     private String description;
     private int numberOfAnswers = 0;
@@ -14,8 +13,7 @@ public class Question {
     public Question() {
     }
 
-    public Question(Long id, String title, String description) {
-        this.id = id;
+    public Question(String title, String description) {
         this.title = title;
         this.description = description;
     }
@@ -63,12 +61,4 @@ public class Question {
     }
 
     public void increaseNumberOfAnswers() { ++numberOfAnswers; }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
 }

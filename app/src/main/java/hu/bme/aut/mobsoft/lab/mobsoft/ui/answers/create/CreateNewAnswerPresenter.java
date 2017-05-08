@@ -13,6 +13,8 @@ import hu.bme.aut.mobsoft.lab.mobsoft.interactor.answers.event.SaveAnswerEvent;
 import hu.bme.aut.mobsoft.lab.mobsoft.model.answer.Answer;
 import hu.bme.aut.mobsoft.lab.mobsoft.ui.Presenter;
 
+import static hu.bme.aut.mobsoft.lab.mobsoft.MobSoftApplication.injector;
+
 public class CreateNewAnswerPresenter extends Presenter<CreateNewAnswerScreen> {
 
     @Inject
@@ -27,6 +29,7 @@ public class CreateNewAnswerPresenter extends Presenter<CreateNewAnswerScreen> {
     @Override
     public void attachScreen(CreateNewAnswerScreen screen) {
         super.attachScreen(screen);
+        injector.inject(this);
         bus.register(this);
     }
 

@@ -9,6 +9,7 @@ import hu.bme.aut.mobsoft.lab.mobsoft.interactor.question.QuestionsInteractor;
 import hu.bme.aut.mobsoft.lab.mobsoft.repository.RepositoryModule;
 import hu.bme.aut.mobsoft.lab.mobsoft.ui.UIModule;
 import hu.bme.aut.mobsoft.lab.mobsoft.ui.answers.create.CreateNewAnswerActivity;
+import hu.bme.aut.mobsoft.lab.mobsoft.ui.answers.create.CreateNewAnswerPresenter;
 import hu.bme.aut.mobsoft.lab.mobsoft.ui.answers.list.AnswersActivity;
 import hu.bme.aut.mobsoft.lab.mobsoft.ui.answers.list.AnswersPresenter;
 import hu.bme.aut.mobsoft.lab.mobsoft.ui.questions.create.CreateNewQuestionActivity;
@@ -29,6 +30,7 @@ public interface MobSoftApplicationComponent {
     void inject(AnswersPresenter answersPresenter);
     void inject(QuestionsPresenter questionsPresenter);
     void inject(CreateNewQuestionPresenter createNewQuestionPresenter);
+    void inject(CreateNewAnswerPresenter createNewAnswerPresenter);
 
     void inject(QuestionsInteractor questionsInteractor);
     void inject(AnswersInteractor answersInteractor);

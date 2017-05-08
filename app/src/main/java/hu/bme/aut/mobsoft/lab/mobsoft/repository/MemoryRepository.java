@@ -2,10 +2,16 @@ package hu.bme.aut.mobsoft.lab.mobsoft.repository;
 
 import android.content.Context;
 
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.NoSuchElementException;
 
 import hu.bme.aut.mobsoft.lab.mobsoft.model.answer.Answer;
 import hu.bme.aut.mobsoft.lab.mobsoft.model.answer.Rating;
@@ -14,86 +20,60 @@ import hu.bme.aut.mobsoft.lab.mobsoft.model.question.SortBy;
 
 public class MemoryRepository implements Repository {
 
-    private List<Question> questions;
-    private List<Answer> answers;
+    BiMap<Long, Answer> answers;
+    BiMap<Long, Question> questions;
 
     @Override
     public void open(Context context) {
-        questions = new ArrayList<>();
-        answers = new ArrayList<>();
+        questions = HashBiMap.create();
+        answers = HashBiMap.create();
 
-        Question question = new Question(1L, "How to Java?", "I need to know how to Java! Pls help!");
-        questions.add(question);
-        answers.add(new Answer(1L, 1L, "Why would you?", "It's a #$%@ language, learn C!", 22));
-        answers.add(new Answer(2L, 1L, "Lol, just don't...", "Learn Scala or some other real language you moron!", -3));
-        question.setNumberOfAnswers(2);
+        long id;
+        Answer answer;
 
-        question = new Question(2L, "How to Android?", "I literally have no idea how to make apps. Can you tell me please how do I begin?");
-        questions.add(question);
-        answers.add(new Answer(3L, 2L, "Learn Java first", "Learn to code in Java then move on to Android and...", -1));
-        answers.add(new Answer(4L, 2L, "One does not simply...", "One does not simply learn to make Android apps.", 42));
-        question.setNumberOfAnswers(2);
+        id = saveQuestion(new Question("How to Java?", "I need to know how to Java! Pls help!"));
+        answer = new Answer(id, "Why would you?", "It's a #$%@ language, learn C!");
+        answer.setRating(23);
+        saveAnswer(answer);
+        answer = new Answer(id, "Lol, just don't...", "Learn Scala or some other real language you moron!");
+        answer.setRating(-3);
+        saveAnswer(answer);
 
-        question = new Question(3L, "Sample question with an unreasonably long title, that should be cut down to fit in a single line, so this part should not even be visible", "Sample description");
-        questions.add(question);
-        answers.add(new Answer(5L, 3L, "Sample answer title.", "Sample answer description.", 42));
-        answers.add(new Answer(6L, 3L, "Sample answer title.", "Sample answer description.", 42));
-        answers.add(new Answer(7L, 3L, "Sample answer title.", "Sample answer description.", 42));
-        answers.add(new Answer(8L, 3L, "Sample answer title.", "Sample answer description.", 42));
-        answers.add(new Answer(9L, 3L, "Sample answer title.", "Sample answer description.", 42));
-        answers.add(new Answer(10L, 3L, "Sample answer title.", "Sample answer description.", 42));
-        answers.add(new Answer(11L, 3L, "Sample answer title.", "Sample answer description.", 42));
-        answers.add(new Answer(12L, 3L, "Sample answer title.", "Sample answer description.", 42));
-        answers.add(new Answer(13L, 3L, "Sample answer title.", "Sample answer description.", 42));
-        answers.add(new Answer(14L, 3L, "Sample answer title.", "Sample answer description.", 42));
-        answers.add(new Answer(15L, 3L, "Sample answer title.", "Sample answer description.", 42));
-        answers.add(new Answer(16, 3L, "Sample answer title.", "Sample answer description.", 42));
-        answers.add(new Answer(17L, 3L, "Sample answer title.", "Sample answer description.", 42));
-        answers.add(new Answer(18L, 3L, "Sample answer title.", "Sample answer description.", 42));
-        answers.add(new Answer(18L, 3L, "Sample answer title.", "Sample answer description.", 42));
-        answers.add(new Answer(19L, 3L, "Sample answer title.", "Sample answer description.", 42));
-        question.setNumberOfAnswers(16);
+        id = saveQuestion(new Question("How to Android?", "I literally have no idea how to make apps. Can you tell me please how do I begin?"));
+        saveAnswer(new Answer(id, "Learn Java first", "Learn to code in Java then move on to Android and..."));
+        saveAnswer(new Answer(id, "One does not simply...", "One does not simply learn to make Android apps."));
 
-        questions.add(new Question(4L, "Sample question", "Sample description"));
-        questions.add(new Question(5L, "Sample question", "Sample description"));
-        questions.add(new Question(6L, "Sample question", "Sample description"));
-        questions.add(new Question(7L, "Sample question", "Sample description"));
-        questions.add(new Question(8L, "Sample question", "Sample description"));
-        questions.add(new Question(9L, "Sample question", "Sample description"));
-        questions.add(new Question(10L, "Sample question", "Sample description"));
-        questions.add(new Question(11L, "Sample question", "Sample description"));
-        questions.add(new Question(12L, "Sample question", "Sample description"));
-        questions.add(new Question(13L, "Sample question", "Sample description"));
-        questions.add(new Question(14L, "Sample question", "Sample description"));
+        id = saveQuestion(new Question("Sample question with an unreasonably long title, that should be cut down to fit in a single line, so this part should not even be visible", "Sample description"));
+        for(int i = 0; i < 50; ++i)
+            saveAnswer(new Answer(id, "Sample answer title.", "Sample answer description."));
+
+        for(int i = 0; i < 50; ++i)
+            saveQuestion(new Question("Sample question", "Sample description"));
     }
 
     @Override
     public void close() {
-
     }
 
     @Override
     public long saveQuestion(Question question) {
-        final long maxId = Collections.max(questions, new Comparator<Question>() {
-            @Override
-            public int compare(Question left, Question right) {
-                return (int)(left.getId() - right.getId());
+        Long id = questions.inverse().get(question);
+        if(id == null) {
+            try {
+                id = Collections.max(questions.keySet()) + 1;
+            } catch (NoSuchElementException e) {
+                id = 0L;
             }
-        }).getId();
-        final long newId = maxId + 1;
-
-        question.setId(newId);
-        questions.add(question);
-        return newId;
+        }
+        question.setId(id);
+        //noinspection ResultOfMethodCallIgnored
+        questions.forcePut(id, question);
+        return id;
     }
 
     @Override
     public Question getQuestion(long id) {
-        for(Question question : questions) {
-            if(question.getId() == id)
-                return question;
-        }
-        throw new IllegalArgumentException("Non-existent question ID");
+        return questions.get(id);
     }
 
     @Override
@@ -102,14 +82,14 @@ public class MemoryRepository implements Repository {
 
         if(query != null) {
             returnQuestions = new ArrayList<>();
-            for(Question question : questions) {
+            for(Question question : questions.values()) {
                 if(question.getTitle().toLowerCase().contains(query.toLowerCase())
                         || question.getDescription().toLowerCase().contains(query.toLowerCase())) {
                     returnQuestions.add(question);
                 }
             }
         } else {
-            returnQuestions = new ArrayList<>(questions);
+            returnQuestions = new ArrayList<>(questions.values());
         }
 
         if(sortBy != null) {
@@ -141,49 +121,35 @@ public class MemoryRepository implements Repository {
     @Override
     public void saveOrReplaceQuestions(List<Question> newQuestions) {
         for(Question newQuestion : newQuestions) {
-            boolean inserted = false;
-            for (int i = 0; i < questions.size(); ++i) {
-                if(questions.get(i).equals(newQuestion)){
-                    questions.set(i, newQuestion);
-                    inserted = true;
-                    break;
-                }
-            }
-            if(!inserted){
-                questions.add(newQuestion);
-            }
+            //noinspection ResultOfMethodCallIgnored
+            questions.forcePut(newQuestion.getId(), newQuestion);
         }
     }
 
     @Override
     public void saveAnswer(Answer answer) {
-        boolean found = false;
-        for(Question question : questions){
-            if(question.getId() == answer.getQuestionId()){
-                question.increaseNumberOfAnswers();
-                found = true;
-                break;
+        Question question = questions.get(answer.getQuestionId());
+        if(question == null)
+            throw new IllegalArgumentException("Question could not be found for answer!");
+        question.increaseNumberOfAnswers();
+
+        Long id = answers.inverse().get(answer);
+        if(id == null){
+            try {
+                id = Collections.max(answers.keySet()) + 1;
+            } catch (NoSuchElementException e) {
+                id = 0L;
             }
         }
-        if(!found)
-            throw new IllegalArgumentException("Question could not be found for answer!");
-
-        final long maxId = Collections.max(answers, new Comparator<Answer>() {
-            @Override
-            public int compare(Answer left, Answer right) {
-                return (int)(left.getId() - right.getId());
-            }
-        }).getId();
-        final long newId = maxId + 1;
-
-        answer.setId(newId);
-        answers.add(answer);
+        answer.setId(id);
+        //noinspection ResultOfMethodCallIgnored
+        answers.forcePut(id, answer);
     }
 
     @Override
     public List<Answer> getAnswersForId(long id) {
         List<Answer> returnAnswers = new ArrayList<>();
-        for(Answer answer : answers) {
+        for(Answer answer : answers.values()) {
             if(answer.getQuestionId() == id) {
                 returnAnswers.add(answer);
             }
@@ -194,42 +160,17 @@ public class MemoryRepository implements Repository {
     @Override
     public void saveOrReplaceAnswers(List<Answer> newAnswers) {
         for(Answer newAnswer : newAnswers){
-            boolean inserted = false;
-            for (int i = 0; i < answers.size(); i++) {
-                if(answers.get(i).equals(newAnswer)){
-                    answers.set(i, newAnswer);
-                    inserted = true;
-                    break;
-                }
-            }
-            if(!inserted){
-                answers.add(newAnswer);
-            }
+            //noinspection ResultOfMethodCallIgnored
+            answers.forcePut(newAnswer.getId(), newAnswer);
         }
     }
 
     @Override
     public void rateAnswer(Rating rating) {
-        Answer answer = null;
-        for(Answer a : answers) {
-            if(a.getId() == rating.getAnswerId()) {
-                answer = a;
-                break;
-            }
-        }
-
+        Answer answer = answers.get(rating.getAnswerId());
         if(answer == null)
             throw new IllegalArgumentException("Answer with given ID does not exist");
 
-        int newRating = answer.getRating();
-        switch (rating.getVote()) {
-            case UPVOTE:
-                newRating = newRating + 1;
-                break;
-            case DOWNVOTE:
-                newRating = newRating - 1;
-                break;
-        }
-        answer.setRating(newRating);
+        answer.addRating(rating.getVote());
     }
 }
