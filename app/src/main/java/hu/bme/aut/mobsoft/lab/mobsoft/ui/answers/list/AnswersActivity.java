@@ -9,6 +9,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -85,6 +86,18 @@ public class AnswersActivity extends AppCompatActivity implements AnswersScreen,
                 new DividerItemDecoration(answersRecyclerView.getContext(),
                         linearLayoutManager.getOrientation());
         answersRecyclerView.addItemDecoration(dividerItemDecoration);
+
+        answersRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                if(newState == RecyclerView.SCROLL_STATE_IDLE){
+                    createNewAnswerButton.show();
+                } else {
+                    createNewAnswerButton.hide();
+                }
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+        });
 
         createNewAnswerButton.setOnClickListener(new View.OnClickListener() {
             @Override

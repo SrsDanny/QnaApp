@@ -73,6 +73,18 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsScr
                         linearLayoutManager.getOrientation());
         questionsRecyclerView.addItemDecoration(dividerItemDecoration);
 
+        questionsRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                if(newState == RecyclerView.SCROLL_STATE_IDLE){
+                    createNewQuestionButton.show();
+                } else {
+                    createNewQuestionButton.hide();
+                }
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+        });
+
         createNewQuestionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
