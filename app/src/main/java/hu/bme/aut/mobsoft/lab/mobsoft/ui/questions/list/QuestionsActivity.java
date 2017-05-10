@@ -119,7 +119,7 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsScr
         final View actionView = menu.findItem(R.id.sortAction).getActionView();
         sortSpinner = (Spinner) actionView.findViewById(R.id.sort_spinner);
         final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
-                this, R.array.sort_spinner_values, android.R.layout.simple_spinner_item);
+                getSupportActionBar().getThemedContext(), R.array.sort_spinner_values, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sortSpinner.setAdapter(adapter);
         return true;
