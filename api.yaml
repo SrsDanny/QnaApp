@@ -26,7 +26,10 @@ paths:
             $ref: "#/definitions/Question"
       responses:
         201:
-          description: Question created.
+          description: Question created. Returned ID of new question.
+          schema:
+            type: integer
+            format: int64
         400:
           description: Question could not be created.
     get:
@@ -76,9 +79,29 @@ paths:
             $ref: "#/definitions/Answer"
       responses:
         201:
-          description: Answer created
+          description: Answer created. Returned ID of new answer.
+          schema:
+            type: integer
+            format: int64
         400:
           description: Answer could not be created
+    put:
+      tags:
+        - answer
+      summary: Update answer
+      operationId: updateAnswer
+      parameters:
+        - name: body
+          in: body
+          description: Answer object to update
+          required: true
+          schema:
+            $ref: "#/definitions/Answer"
+      responses:
+        200:
+          description: Answer updated
+        404:
+          description: Answer not found
   /answer/{answerId}:
     get:
       tags:
@@ -99,6 +122,24 @@ paths:
             $ref: "#/definitions/Answer"
         404:
           description: answer not found
+  /answer/rate:
+    post:
+      tags:
+        - answer
+      summary: Rate an answer
+      operationId: rateAnswer
+      parameters:
+        - name: body
+          in: body
+          description: Rate description object
+          required: true
+          schema:
+            $ref: "#/definitions/Rating"
+      responses:
+        200:
+          description: Answer rated
+        404:
+          description: Answer not found
   /answer/forQuestionId/{questionId}:
     get:
       tags:
@@ -119,6 +160,8 @@ paths:
             type: array
             items:
               $ref: "#/definitions/Answer"
+        404:
+          description: Question not found for ID
 definitions:
   Question:
     type: object
@@ -160,3 +203,17 @@ definitions:
       rating:
         type: integer
         format: int32
+  Rating:
+    type: object
+    required:
+      - answerId
+      - vote
+    properties:
+      answerId:
+        type: integer
+        format: int64
+      vote:
+        type: string
+        enum:
+          - UPVOTE
+          - DOWNVOTE
