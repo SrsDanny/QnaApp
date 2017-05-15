@@ -9,18 +9,6 @@ import java.util.List;
 
 public interface AnswerApi {
 
-  /**
-   * Update answer
-   *
-   * @param body Answer object to update
-   * @return Call<Void>
-   */
-
-  @PUT("answer")
-  Call<Void> updateAnswer(
-          @Body Answer body
-  );
-
 
   /**
    * Create answer
@@ -58,19 +46,6 @@ public interface AnswerApi {
   @POST("answer/rate")
   Call<Void> rateAnswer(
           @Body Rating body
-  );
-
-
-  /**
-   * Get answer by ID
-   *
-   * @param answerId ID of the answer to return
-   * @return Call<Answer>
-   */
-
-  @GET("answer/{answerId}")
-  Call<Answer> getAnswerById(
-          @Path("answerId") Long answerId
   );
 
 

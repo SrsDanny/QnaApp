@@ -1,8 +1,5 @@
 package hu.bme.aut.mobsoft.lab.mobsoft.interactor.question;
 
-import com.orm.query.Condition;
-import com.orm.query.Select;
-
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
@@ -15,7 +12,6 @@ import hu.bme.aut.mobsoft.lab.mobsoft.model.question.Question;
 import hu.bme.aut.mobsoft.lab.mobsoft.model.question.SortBy;
 import hu.bme.aut.mobsoft.lab.mobsoft.network.QuestionApi;
 import hu.bme.aut.mobsoft.lab.mobsoft.repository.Repository;
-import hu.bme.aut.mobsoft.lab.mobsoft.ui.questions.list.QuestionsPresenter;
 import retrofit2.Response;
 
 import static hu.bme.aut.mobsoft.lab.mobsoft.MobSoftApplication.injector;

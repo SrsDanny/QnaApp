@@ -85,43 +85,6 @@ paths:
             format: int64
         400:
           description: Answer could not be created
-    put:
-      tags:
-        - answer
-      summary: Update answer
-      operationId: updateAnswer
-      parameters:
-        - name: body
-          in: body
-          description: Answer object to update
-          required: true
-          schema:
-            $ref: "#/definitions/Answer"
-      responses:
-        200:
-          description: Answer updated
-        404:
-          description: Answer not found
-  /answer/{answerId}:
-    get:
-      tags:
-        - answer
-      summary: Get answer by ID
-      operationId: getAnswerById
-      parameters:
-        - name: answerId
-          in: path
-          description: ID of the answer to return
-          required: true
-          type: integer
-          format: int64
-      responses:
-        200:
-          description: successful operation
-          schema:
-            $ref: "#/definitions/Answer"
-        404:
-          description: answer not found
   /answer/rate:
     post:
       tags:
