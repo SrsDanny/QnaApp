@@ -10,7 +10,7 @@ public class SortBy {
         What(String val) {
             this.val = val;
         }
-        
+
         public String toCustomString() {
             return val;
         }

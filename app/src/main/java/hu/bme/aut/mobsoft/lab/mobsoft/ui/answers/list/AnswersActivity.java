@@ -3,6 +3,7 @@ package hu.bme.aut.mobsoft.lab.mobsoft.ui.answers.list;
 import android.app.DialogFragment;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
@@ -45,6 +46,7 @@ public class AnswersActivity extends AppCompatActivity implements AnswersScreen,
     @BindView(R.id.question_description) TextView questionDescription;
     @BindView(R.id.answers_count) TextView answersCountText;
     @BindView(R.id.create_new_answer_fab) FloatingActionButton createNewAnswerButton;
+    @BindView(R.id.swipeRefreshLayout) SwipeRefreshLayout swipeRefreshLayout;
 
     private List<Answer> answerList;
     private AnswersAdapter answersAdapter;
@@ -108,6 +110,13 @@ public class AnswersActivity extends AppCompatActivity implements AnswersScreen,
                 startActivity(intent);
             }
         });
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                answersPresenter.updateDetails(questionId);
+            }
+        });
     }
 
     @Override
@@ -142,6 +151,9 @@ public class AnswersActivity extends AppCompatActivity implements AnswersScreen,
 
     @Override
     public void showAnswers(List<Answer> answers) {
+        if(swipeRefreshLayout != null) {
+            swipeRefreshLayout.setRefreshing(false);
+        }
         answerList.clear();
         answerList.addAll(answers);
         answersAdapter.notifyDataSetChanged();

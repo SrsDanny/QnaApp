@@ -2,6 +2,7 @@ package hu.bme.aut.mobsoft.lab.mobsoft.ui.questions.list;
 
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
@@ -48,6 +49,8 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsScr
     private Spinner sortSpinner;
     private CheckBox ascendingCheckBox;
     private SearchView searchView;
+
+    @BindView(R.id.swipeRefreshLayout) SwipeRefreshLayout swipeRefreshLayout;
 
     @BindView(R.id.create_new_question_fab) FloatingActionButton createNewQuestionButton;
 
@@ -99,6 +102,13 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsScr
                 Intent intent = new Intent(QuestionsActivity.this, CreateNewQuestionActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(intent);
+            }
+        });
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                questionsPresenter.updateQuestions();
             }
         });
     }
@@ -154,6 +164,10 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsScr
 
     @Override
     public void showQuestions(List<Question> questions) {
+        if(swipeRefreshLayout != null) {
+            swipeRefreshLayout.setRefreshing(false);
+        }
+
         questionList.clear();
         questionList.addAll(questions);
         questionsAdapter.notifyDataSetChanged();

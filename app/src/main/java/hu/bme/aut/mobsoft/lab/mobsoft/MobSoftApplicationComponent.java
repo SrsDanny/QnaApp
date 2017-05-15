@@ -8,6 +8,7 @@ import hu.bme.aut.mobsoft.lab.mobsoft.interactor.answers.AnswersInteractor;
 import hu.bme.aut.mobsoft.lab.mobsoft.interactor.question.QuestionsInteractor;
 import hu.bme.aut.mobsoft.lab.mobsoft.network.NetworkModule;
 import hu.bme.aut.mobsoft.lab.mobsoft.network.mock.MockInterceptor;
+import hu.bme.aut.mobsoft.lab.mobsoft.network.mock.MockNetworkModule;
 import hu.bme.aut.mobsoft.lab.mobsoft.repository.RepositoryModule;
 import hu.bme.aut.mobsoft.lab.mobsoft.ui.UIModule;
 import hu.bme.aut.mobsoft.lab.mobsoft.ui.answers.create.CreateNewAnswerActivity;
@@ -21,7 +22,7 @@ import hu.bme.aut.mobsoft.lab.mobsoft.ui.questions.list.QuestionsPresenter;
 
 @Singleton
 @Component(modules = {UIModule.class, RepositoryModule.class,
-        InteractorModule.class, NetworkModule.class})
+        InteractorModule.class, MockNetworkModule.class})
 public interface MobSoftApplicationComponent {
     void inject(MobSoftApplication mobSoftApplication);
 
