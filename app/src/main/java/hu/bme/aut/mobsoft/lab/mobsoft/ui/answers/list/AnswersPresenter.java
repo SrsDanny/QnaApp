@@ -9,7 +9,7 @@ import java.util.concurrent.Executor;
 import javax.inject.Inject;
 
 import hu.bme.aut.mobsoft.lab.mobsoft.interactor.answers.AnswersInteractor;
-import hu.bme.aut.mobsoft.lab.mobsoft.interactor.answers.event.GetDetailsEvent;
+import hu.bme.aut.mobsoft.lab.mobsoft.interactor.answers.event.DetailsEvent;
 import hu.bme.aut.mobsoft.lab.mobsoft.interactor.answers.event.RatingAppliedEvent;
 import hu.bme.aut.mobsoft.lab.mobsoft.model.answer.Rating;
 import hu.bme.aut.mobsoft.lab.mobsoft.ui.Presenter;
@@ -70,7 +70,7 @@ public class AnswersPresenter extends Presenter<AnswersScreen> {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onGetDetailsEvent(GetDetailsEvent event) {
+    public void onGetDetailsEvent(DetailsEvent event) {
         if(event.getThrowable() != null) {
             event.getThrowable().printStackTrace();
             if(screen != null) {

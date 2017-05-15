@@ -57,7 +57,7 @@ public class SugarOrmRepository implements Repository {
     }
 
     @Override
-    public void saveOrReplaceQuestions(List<Question> questions) {
+    public void saveQuestions(List<Question> questions) {
         SugarRecord.saveInTx(questions);
     }
 
@@ -79,7 +79,7 @@ public class SugarOrmRepository implements Repository {
     }
 
     @Override
-    public void saveOrReplaceAnswers(List<Answer> answers) {
+    public void saveAnswers(List<Answer> answers) {
         SugarRecord.saveInTx(answers);
     }
 

@@ -6,6 +6,7 @@ import dagger.Component;
 import hu.bme.aut.mobsoft.lab.mobsoft.interactor.InteractorModule;
 import hu.bme.aut.mobsoft.lab.mobsoft.interactor.answers.AnswersInteractor;
 import hu.bme.aut.mobsoft.lab.mobsoft.interactor.question.QuestionsInteractor;
+import hu.bme.aut.mobsoft.lab.mobsoft.network.NetworkModule;
 import hu.bme.aut.mobsoft.lab.mobsoft.repository.RepositoryModule;
 import hu.bme.aut.mobsoft.lab.mobsoft.ui.UIModule;
 import hu.bme.aut.mobsoft.lab.mobsoft.ui.answers.create.CreateNewAnswerActivity;
@@ -18,7 +19,8 @@ import hu.bme.aut.mobsoft.lab.mobsoft.ui.questions.list.QuestionsActivity;
 import hu.bme.aut.mobsoft.lab.mobsoft.ui.questions.list.QuestionsPresenter;
 
 @Singleton
-@Component(modules = {UIModule.class, RepositoryModule.class, InteractorModule.class})
+@Component(modules = {UIModule.class, RepositoryModule.class,
+        InteractorModule.class, NetworkModule.class})
 public interface MobSoftApplicationComponent {
     void inject(MobSoftApplication mobSoftApplication);
 

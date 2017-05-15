@@ -6,7 +6,7 @@ import java.util.List;
 import hu.bme.aut.mobsoft.lab.mobsoft.model.answer.Answer;
 import hu.bme.aut.mobsoft.lab.mobsoft.model.question.Question;
 
-public class GetDetailsEvent {
+public class DetailsEvent {
     private Question question;
     private List<Answer> answers;
     private Throwable throwable;

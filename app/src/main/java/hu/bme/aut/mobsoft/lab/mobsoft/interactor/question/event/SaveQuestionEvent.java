@@ -2,7 +2,7 @@ package hu.bme.aut.mobsoft.lab.mobsoft.interactor.question.event;
 
 
 public class SaveQuestionEvent {
-    private long questionId;
+    private Long questionId;
     private Throwable throwable;
 
     public Throwable getThrowable() {
@@ -13,11 +13,11 @@ public class SaveQuestionEvent {
         this.throwable = throwable;
     }
 
-    public long getQuestionId() {
+    public Long getQuestionId() {
         return questionId;
     }
 
-    public void setQuestionId(long questionId) {
+    public void setQuestionId(Long questionId) {
         this.questionId = questionId;
     }
 }

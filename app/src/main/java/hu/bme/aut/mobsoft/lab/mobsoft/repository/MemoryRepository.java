@@ -119,7 +119,7 @@ public class MemoryRepository implements Repository {
     }
 
     @Override
-    public void saveOrReplaceQuestions(List<Question> newQuestions) {
+    public void saveQuestions(List<Question> newQuestions) {
         for(Question newQuestion : newQuestions) {
             //noinspection ResultOfMethodCallIgnored
             questions.forcePut(newQuestion.getId(), newQuestion);
@@ -158,7 +158,7 @@ public class MemoryRepository implements Repository {
     }
 
     @Override
-    public void saveOrReplaceAnswers(List<Answer> newAnswers) {
+    public void saveAnswers(List<Answer> newAnswers) {
         for(Answer newAnswer : newAnswers){
             //noinspection ResultOfMethodCallIgnored
             answers.forcePut(newAnswer.getId(), newAnswer);
