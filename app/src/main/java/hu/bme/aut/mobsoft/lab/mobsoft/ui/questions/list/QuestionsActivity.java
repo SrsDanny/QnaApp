@@ -7,10 +7,14 @@ import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -24,11 +28,13 @@ import butterknife.ButterKnife;
 import hu.bme.aut.mobsoft.lab.mobsoft.MobSoftApplication;
 import hu.bme.aut.mobsoft.lab.mobsoft.R;
 import hu.bme.aut.mobsoft.lab.mobsoft.model.question.Question;
+import hu.bme.aut.mobsoft.lab.mobsoft.model.question.SortBy;
 import hu.bme.aut.mobsoft.lab.mobsoft.ui.answers.create.CreateNewAnswerActivity;
 import hu.bme.aut.mobsoft.lab.mobsoft.ui.answers.list.AnswersActivity;
 import hu.bme.aut.mobsoft.lab.mobsoft.ui.questions.create.CreateNewQuestionActivity;
 
-public class QuestionsActivity extends AppCompatActivity implements QuestionsScreen {
+public class QuestionsActivity extends AppCompatActivity implements QuestionsScreen,
+        SearchView.OnQueryTextListener, AdapterView.OnItemSelectedListener, CompoundButton.OnCheckedChangeListener {
 
     @Inject
     QuestionsPresenter questionsPresenter;
@@ -40,6 +46,8 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsScr
     @BindView(R.id.toolbar) Toolbar toolbar;
 
     private Spinner sortSpinner;
+    private CheckBox ascendingCheckBox;
+    private SearchView searchView;
 
     @BindView(R.id.create_new_question_fab) FloatingActionButton createNewQuestionButton;
 
@@ -122,6 +130,25 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsScr
                 getSupportActionBar().getThemedContext(), R.array.sort_spinner_values, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sortSpinner.setAdapter(adapter);
+        ascendingCheckBox = (CheckBox) actionView.findViewById(R.id.ascending_checkbox);
+
+        SortBy sortBy = questionsPresenter.getSortBy();
+        if(sortBy != null)
+        {
+            final int pos = adapter.getPosition(sortBy.getWhat().toCustomString());
+            sortSpinner.setSelection(pos);
+            ascendingCheckBox.setSelected(sortBy.isAscending());
+        }
+        sortSpinner.setOnItemSelectedListener(this);
+        ascendingCheckBox.setOnCheckedChangeListener(this);
+
+        searchView = (SearchView) menu.findItem(R.id.searchAction).getActionView();
+        searchView.setOnQueryTextListener(QuestionsActivity.this);
+        final String query = questionsPresenter.getQuery();
+        if(query != null)
+        {
+            searchView.setQuery(query, false);
+        }
         return true;
     }
 
@@ -135,5 +162,46 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsScr
     @Override
     public void showMessage(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        questionsPresenter.setQuery(query);
+        questionsPresenter.getQuestions();
+
+        return true;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        questionsPresenter.setQuery(newText);
+        questionsPresenter.getQuestions();
+
+        return false;
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        SortBy sortBy = questionsPresenter.getSortBy();
+        if(sortBy == null) sortBy = new SortBy(SortBy.What.TITLE, false);
+        if(i == 0)
+            sortBy.setWhat(SortBy.What.TITLE);
+        if(i == 1)
+            sortBy.setWhat(SortBy.What.NUMBER_OF_ANSWERS);
+        questionsPresenter.setSortBy(sortBy);
+        questionsPresenter.getQuestions();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+        SortBy sortBy = questionsPresenter.getSortBy();
+        if(sortBy == null) sortBy = new SortBy(SortBy.What.TITLE, false);
+        sortBy.setAscending(b);
+        questionsPresenter.setSortBy(sortBy);
+        questionsPresenter.getQuestions();
     }
 }

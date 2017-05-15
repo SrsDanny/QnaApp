@@ -2,8 +2,18 @@ package hu.bme.aut.mobsoft.lab.mobsoft.model.question;
 
 public class SortBy {
     public enum What {
-        TITLE,
-        NUMBER_OF_ANSWERS
+        TITLE("title"),
+        NUMBER_OF_ANSWERS("answers");
+
+        private String val;
+
+        What(String val) {
+            this.val = val;
+        }
+        
+        public String toCustomString() {
+            return val;
+        }
     }
 
     private What what;
@@ -20,5 +30,13 @@ public class SortBy {
 
     public boolean isAscending() {
         return ascending;
+    }
+
+    public void setWhat(What what) {
+        this.what = what;
+    }
+
+    public void setAscending(boolean ascending) {
+        this.ascending = ascending;
     }
 }
