@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -18,6 +19,9 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +40,9 @@ import hu.bme.aut.mobsoft.lab.mobsoft.ui.questions.create.CreateNewQuestionActiv
 
 public class QuestionsActivity extends AppCompatActivity implements QuestionsScreen,
         SearchView.OnQueryTextListener, AdapterView.OnItemSelectedListener, CompoundButton.OnCheckedChangeListener {
+
+    private Tracker mTracker;
+    private String name = "QuestionsList";
 
     @Inject
     QuestionsPresenter questionsPresenter;
@@ -99,6 +106,11 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsScr
         createNewQuestionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mTracker.send(new HitBuilders.EventBuilder()
+                        .setCategory("Action")
+                        .setAction("Create new activity")
+                        .build());
+
                 Intent intent = new Intent(QuestionsActivity.this, CreateNewQuestionActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(intent);
@@ -111,11 +123,16 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsScr
                 questionsPresenter.updateQuestions();
             }
         });
+
+        final MobSoftApplication application = (MobSoftApplication) getApplication();
+        mTracker = application.getDefaultTracker();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        mTracker.setScreenName("Image~" + name);
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
         questionsPresenter.getQuestions();
     }
 
@@ -159,6 +176,15 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsScr
         {
             searchView.setQuery(query, false);
         }
+
+        MenuItem crashButton = menu.findItem(R.id.crashMeButton);
+        crashButton.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                throw new RuntimeException("This is a crash!");
+            }
+        });
+
         return true;
     }
 

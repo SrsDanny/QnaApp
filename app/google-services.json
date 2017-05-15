@@ -1,0 +1,38 @@
+{
+  "project_info": {
+    "project_number": "380462138874",
+    "project_id": "firebase-mobsoftlab"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:380462138874:android:4d381474dcc41e4f",
+        "android_client_info": {
+          "package_name": "hu.bme.aut.mobsoft.lab.mobsoft"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBB9LZmOVDicD4IIsguHt9NiNr_LIKejo8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 2,
+          "analytics_property": {
+            "tracking_id": "UA-99065669-1"
+          }
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

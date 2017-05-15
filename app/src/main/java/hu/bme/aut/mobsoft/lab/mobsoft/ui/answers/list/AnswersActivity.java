@@ -15,6 +15,9 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -32,6 +35,9 @@ import hu.bme.aut.mobsoft.lab.mobsoft.ui.answers.create.CreateNewAnswerActivity;
 
 public class AnswersActivity extends AppCompatActivity implements AnswersScreen,
         RateDialogFragment.RateDialogListener {
+
+    private Tracker mTracker;
+    private String name = "QuestionDetails";
 
     public static final String QUESTION_ID_KEY = "questionId";
 
@@ -117,6 +123,9 @@ public class AnswersActivity extends AppCompatActivity implements AnswersScreen,
                 answersPresenter.updateDetails(questionId);
             }
         });
+
+        final MobSoftApplication application = (MobSoftApplication) getApplication();
+        mTracker = application.getDefaultTracker();
     }
 
     @Override
@@ -128,6 +137,8 @@ public class AnswersActivity extends AppCompatActivity implements AnswersScreen,
     @Override
     protected void onResume() {
         super.onResume();
+        mTracker.setScreenName("Image~" + name);
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
         answersPresenter.getDetails(questionId);
     }
 

@@ -9,6 +9,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -18,6 +21,9 @@ import hu.bme.aut.mobsoft.lab.mobsoft.R;
 import hu.bme.aut.mobsoft.lab.mobsoft.model.answer.Answer;
 
 public class CreateNewAnswerActivity extends AppCompatActivity implements CreateNewAnswerScreen {
+    private Tracker mTracker;
+    private String name = "CreateNewAnswer";
+
     public static final String QUESTION_ID_KEY = "questionId";
 
     private long questionId;
@@ -54,12 +60,21 @@ public class CreateNewAnswerActivity extends AppCompatActivity implements Create
                 createButton.setEnabled(false);
             }
         });
+        final MobSoftApplication application = (MobSoftApplication) getApplication();
+        mTracker = application.getDefaultTracker();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         createNewAnswerPresenter.attachScreen(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mTracker.setScreenName("Image~" + name);
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     @Override
