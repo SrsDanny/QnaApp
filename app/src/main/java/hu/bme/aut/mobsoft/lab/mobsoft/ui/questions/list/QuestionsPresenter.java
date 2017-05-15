@@ -54,6 +54,15 @@ public class QuestionsPresenter extends Presenter<QuestionsScreen> {
         });
     }
 
+    public void updateQuestions() {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                questionsInteractor.updateQuestions(query, sortBy);
+            }
+        });
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onGetQuestionsEvent(GetQuestionsEvent event) {
         if(event.getThrowable() != null) {

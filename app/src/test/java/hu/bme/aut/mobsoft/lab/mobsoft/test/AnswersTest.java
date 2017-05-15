@@ -21,6 +21,7 @@ import hu.bme.aut.mobsoft.lab.mobsoft.utils.RobolectricDaggerTestRunner;
 
 import static hu.bme.aut.mobsoft.lab.mobsoft.TestHelper.setTestInjector;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -53,7 +54,7 @@ public class AnswersTest {
 
     @Test
     public void testRateAnswer(){
-        final Rating rating = new Rating(Rating.VoteType.UPVOTE, 11);
+        final Rating rating = new Rating(Rating.VoteType.DOWNVOTE, 11);
         presenter.rateAnswer(rating);
         verify(screen, times(1)).ratingSuccessful(ratingCaptor.capture());
         assertEquals(rating, ratingCaptor.getValue());
@@ -63,12 +64,31 @@ public class AnswersTest {
     @Test
     public void testGetDetails(){
         presenter.getDetails(0);
+        verifyDetails();
+    }
+
+    @Test
+    public void testUpdateDetails(){
+        presenter.updateDetails(0);
+        verifyDetails();
+    }
+
+    void verifyDetails(){
         verify(screen, times(1)).showAnswers(answersCaptor.capture());
         verify(screen, times(1)).showQuestion(questionCaptor.capture());
         verify(screen, never()).showMessage(anyString());
 
-        assertEquals(2, answersCaptor.getValue().size());
-        assertEquals(Long.valueOf(0), questionCaptor.getValue().getId());
+        final List<Answer> capturedAnswers = answersCaptor.getValue();
+        assertEquals(2, capturedAnswers.size());
+        Answer answer = new Answer(0L, "Why would you?", "It's a #$%@ language, learn C!");
+        answer.setId(0L);
+        answer.setRating(23);
+        assertTrue(answer.sameContent(capturedAnswers.get(0)));
+
+        Question question = new Question("How to Java?", "I need to know how to Java! Pls help!");
+        question.setId(0L);
+        question.setNumberOfAnswers(2);
+        assertTrue(question.sameContent(questionCaptor.getValue()));
     }
 
     @After

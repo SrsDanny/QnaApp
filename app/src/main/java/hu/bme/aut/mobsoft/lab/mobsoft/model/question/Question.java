@@ -2,6 +2,8 @@ package hu.bme.aut.mobsoft.lab.mobsoft.model.question;
 
 import com.orm.dsl.Table;
 
+import java.util.Objects;
+
 @Table
 public class Question {
     private Long id = null;
@@ -26,6 +28,14 @@ public class Question {
         Question question = (Question) o;
 
         return id != null ? id.equals(question.id) : question.id == null;
+    }
+
+    public boolean sameContent(Question question) {
+        return this == question ||
+                question != null
+                        && id.equals(question.id)
+                        && description.equals(question.description)
+                        && numberOfAnswers == question.numberOfAnswers;
     }
 
     public Long getId() {

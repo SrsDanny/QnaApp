@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="sort_spinner_values">
-        <item>date</item>
         <item>title</item>
         <item>answers</item>
     </string-array>

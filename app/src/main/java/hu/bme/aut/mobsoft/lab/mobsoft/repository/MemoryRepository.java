@@ -57,7 +57,9 @@ public class MemoryRepository implements Repository {
 
     @Override
     public long saveQuestion(Question question) {
-        Long id = questions.inverse().get(question);
+        Long id = question.getId();
+        if(id == null)
+            id = questions.inverse().get(question);
         if(id == null) {
             try {
                 id = Collections.max(questions.keySet()) + 1;
@@ -80,7 +82,7 @@ public class MemoryRepository implements Repository {
     public List<Question> getQuestions(String query, final SortBy sortBy) {
         List<Question> returnQuestions;
 
-        if(query != null) {
+        if(query != null && !query.isEmpty()) {
             returnQuestions = new ArrayList<>();
             for(Question question : questions.values()) {
                 if(question.getTitle().toLowerCase().contains(query.toLowerCase())
@@ -133,7 +135,9 @@ public class MemoryRepository implements Repository {
             throw new IllegalArgumentException("Question could not be found for answer!");
         question.increaseNumberOfAnswers();
 
-        Long id = answers.inverse().get(answer);
+        Long id = answer.getId();
+        if(id == null)
+            id = answers.inverse().get(answer);
         if(id == null){
             try {
                 id = Collections.max(answers.keySet()) + 1;

@@ -19,6 +19,7 @@ import hu.bme.aut.mobsoft.lab.mobsoft.utils.RobolectricDaggerTestRunner;
 
 import static hu.bme.aut.mobsoft.lab.mobsoft.TestHelper.setTestInjector;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -44,15 +45,29 @@ public class QuestionsTest {
         MockitoAnnotations.initMocks(this);
     }
 
-    @Test
-    public void testGetQuestions() {
-        questionsPresenter.getQuestions();
-
+    private void verifyQuestions() {
         verify(questionsScreen, times(1)).showQuestions(questionsCaptor.capture());
         List<Question> capturedQuestions = questionsCaptor.getValue();
         assertEquals(53, capturedQuestions.size());
 
+        Question question = new Question("How to Android?", "I literally have no idea how to make apps. Can you tell me please how do I begin?");
+        question.setId(1L);
+        question.setNumberOfAnswers(2);
+        assertTrue(question.sameContent(capturedQuestions.get(1)));
+
         verify(questionsScreen, never()).showMessage(anyString());
+    }
+
+    @Test
+    public void testGetQuestions() {
+        questionsPresenter.getQuestions();
+        verifyQuestions();
+    }
+
+    @Test
+    public void testUpdateQuestions() {
+        questionsPresenter.updateQuestions();
+        verifyQuestions();
     }
 
     @After

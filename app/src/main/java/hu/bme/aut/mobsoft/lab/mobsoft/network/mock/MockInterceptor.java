@@ -36,6 +36,7 @@ public class MockInterceptor implements Interceptor {
 
     MockInterceptor() {
         memoryRepository = new MemoryRepository();
+        memoryRepository.open(null);
         injector.inject(this);
         getQuestionByIdPattern =
                 Pattern.compile(NetworkConfig.ENDPOINT_PREFIX + "question/(\\d+)");
@@ -79,8 +80,7 @@ public class MockInterceptor implements Interceptor {
 
         Matcher matcher = getQuestionByIdPattern.matcher(uriPath);
         if(matcher.matches() && request.method().equals("GET")) {
-            final Question question = new Question();
-            question.setId(Long.valueOf(matcher.group(1)));
+            final Question question = memoryRepository.getQuestion(Long.valueOf(matcher.group(1)));
             final String responseString = gson.toJson(question);
 
             return MockHelper.makeResponse(request, 200, responseString);

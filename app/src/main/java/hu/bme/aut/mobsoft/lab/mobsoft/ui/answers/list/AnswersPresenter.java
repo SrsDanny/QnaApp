@@ -48,11 +48,21 @@ public class AnswersPresenter extends Presenter<AnswersScreen> {
             }
         });
     }
+
     public void getDetails(final long id) {
         executor.execute(new Runnable() {
             @Override
             public void run() {
                 answersInteractor.getDetailsFor(id);
+            }
+        });
+    }
+
+    public void updateDetails(final long id) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                answersInteractor.updateDetailsFor(id);
             }
         });
     }

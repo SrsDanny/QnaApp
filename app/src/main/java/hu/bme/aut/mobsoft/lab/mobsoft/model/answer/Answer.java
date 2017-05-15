@@ -27,7 +27,17 @@ public class Answer {
 
         Answer answer = (Answer) o;
 
-        return id == answer.id;
+        return id.equals(answer.id);
+    }
+
+    public boolean sameContent(Answer answer) {
+        return this == answer
+                || answer != null
+                && id.equals(answer.id)
+                && questionId == answer.questionId
+                && title.equals(answer.title)
+                && description.equals(answer.description)
+                && rating == answer.rating;
     }
 
     public Long getId() {
