@@ -16,7 +16,12 @@ import okio.Okio;
 class MockHelper {
 	static Response makeResponse(Request request, int code, final String content) {
 
-		return new Response.Builder().protocol(Protocol.HTTP_2).code(code).request(request).body(new ResponseBody() {
+		return new Response.Builder()
+                .protocol(Protocol.HTTP_2)
+                .code(code)
+                .message("")
+				.request(request)
+                .body(new ResponseBody() {
 			@Override
 			public MediaType contentType() {
 				return MediaType.parse("application/json");

@@ -98,7 +98,7 @@ public class MockInterceptor implements Interceptor {
             return MockHelper.makeResponse(request, 201, "1337");
         }
 
-        if(uriPath.equals(NetworkConfig.ENDPOINT_PREFIX + "answers/rate")
+        if(uriPath.equals(NetworkConfig.ENDPOINT_PREFIX + "answer/rate")
                 && request.method().equals("POST")){
             return MockHelper.makeResponse(request, 200, "");
         }

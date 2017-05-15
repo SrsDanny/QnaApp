@@ -33,4 +33,14 @@ public class Rating {
     public void setAnswerId(long answerId) {
         this.answerId = answerId;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Rating rating = (Rating) o;
+
+        return answerId == rating.answerId && vote == rating.vote;
+    }
 }
