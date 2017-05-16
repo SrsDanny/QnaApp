@@ -51,7 +51,7 @@ public class CreateNewAnswerPresenter extends Presenter<CreateNewAnswerScreen> {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onSaveAnswerEvent(SaveAnswerEvent event) {
         if(event.getThrowable() != null) {
-            event.getThrowable().printStackTrace();;
+            event.getThrowable().printStackTrace();
             if(screen != null) {
                 screen.showMessage("error: " + event.getThrowable().getLocalizedMessage());
             }

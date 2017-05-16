@@ -6,7 +6,6 @@ import dagger.Component;
 import hu.bme.aut.mobsoft.lab.mobsoft.interactor.InteractorModule;
 import hu.bme.aut.mobsoft.lab.mobsoft.interactor.answers.AnswersInteractor;
 import hu.bme.aut.mobsoft.lab.mobsoft.interactor.question.QuestionsInteractor;
-import hu.bme.aut.mobsoft.lab.mobsoft.network.NetworkModule;
 import hu.bme.aut.mobsoft.lab.mobsoft.network.mock.MockInterceptor;
 import hu.bme.aut.mobsoft.lab.mobsoft.network.mock.MockNetworkModule;
 import hu.bme.aut.mobsoft.lab.mobsoft.repository.RepositoryModule;

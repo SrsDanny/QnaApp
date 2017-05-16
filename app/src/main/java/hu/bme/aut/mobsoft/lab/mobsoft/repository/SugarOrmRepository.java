@@ -9,7 +9,6 @@ import com.orm.query.Select;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import hu.bme.aut.mobsoft.lab.mobsoft.model.answer.Answer;
 import hu.bme.aut.mobsoft.lab.mobsoft.model.answer.Rating;

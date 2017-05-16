@@ -4,7 +4,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'io.fabric.tools:gradle:1.+'
+        classpath 'io.fabric.tools:gradle:1.22.1'
     }
 }
 apply plugin: 'com.android.application'
@@ -17,7 +17,7 @@ repositories {
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    buildToolsVersion "25.0.3"
     defaultConfig {
         applicationId "hu.bme.aut.mobsoft.lab.mobsoft"
         minSdkVersion 15
@@ -39,7 +39,7 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:25.1.1'
+    compile 'com.android.support:appcompat-v7:25.3.1'
     testCompile 'junit:junit:4.12'
 
     // Dagger 2 and Compiler
@@ -51,7 +51,7 @@ dependencies {
 
     compile 'com.github.satyan:sugar:1.5'
     compile 'org.greenrobot:eventbus:3.0.0'
-    compile 'com.android.support:design:25.1.1'
+    compile 'com.android.support:design:25.3.1'
 
     compile 'com.jakewharton:butterknife:8.5.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
@@ -71,6 +71,6 @@ dependencies {
         transitive = true;
     }
 
-    compile 'com.google.android.gms:play-services-analytics:10.0.1'
+    compile 'com.google.android.gms:play-services-analytics:10.2.4'
 }
 apply plugin: 'com.google.gms.google-services'
