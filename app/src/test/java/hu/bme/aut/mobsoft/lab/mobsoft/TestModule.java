@@ -34,22 +34,30 @@ public class TestModule {
 
 	@Provides
 	public QuestionsPresenter provideQuestionsPresenter() {
-		return uIModule.provideQuestionsPresenter();
+		//TODO
+		//return uIModule.provideQuestionsPresenter();
+		return null;
 	}
 
 	@Provides
 	public CreateNewQuestionPresenter provideCreateNewQuestionPresenter() {
-		return uIModule.provideCreateNewQuestionPresenter();
+		//TODO
+		// return uIModule.provideCreateNewQuestionPresenter();
+		return null;
 	}
 
 	@Provides
 	public AnswersPresenter provideAnswersPresenter() {
-		return uIModule.provideAnswersPresenter();
+		//TODO
+		// return uIModule.provideAnswersPresenter();
+		return null;
 	}
 
 	@Provides
 	public CreateNewAnswerPresenter provideCreateNewAnswerPresenter() {
-		return uIModule.provideCreateNewAnswerPresenter();
+		//TODO
+		//return uIModule.provideCreateNewAnswerPresenter();\
+		return null;
 	}
 
 	@Provides

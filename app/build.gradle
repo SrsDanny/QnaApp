@@ -14,7 +14,6 @@ repositories {
     maven { url 'https://maven.fabric.io/public' }
 }
 
-
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.3"
@@ -38,14 +37,19 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
+        exclude group: 'com.google.code.findbugs'
     })
     compile 'com.android.support:appcompat-v7:25.3.1'
     testCompile 'junit:junit:4.12'
 
-    // Dagger 2 and Compiler
-    compile "com.google.dagger:dagger-compiler:2.0.1"
-    compile 'com.google.dagger:dagger:2.0.1'
-    annotationProcessor "com.google.dagger:dagger-compiler:2.0.1"
+    // Dagger 2
+    annotationProcessor "com.google.dagger:dagger-compiler:2.11-rc2"
+    testAnnotationProcessor "com.google.dagger:dagger-compiler:2.11-rc2"
+    androidTestAnnotationProcessor "com.google.dagger:dagger-compiler:2.11-rc2"
+    compile 'com.google.dagger:dagger:2.11-rc2'
+    compile 'com.google.dagger:dagger-android:2.11-rc2'
+    compile 'com.google.dagger:dagger-android-support:2.11-rc2'
+    annotationProcessor 'com.google.dagger:dagger-android-processor:2.11-rc2'
     // Required for @Generated annotation (missing in Java <= 1.6; therefore, Android)
     provided 'javax.annotation:jsr250-api:1.0'
 
@@ -66,7 +70,7 @@ dependencies {
 
     testCompile "org.mockito:mockito-core:2.8.9"
 
-    testCompile "org.robolectric:robolectric:3.3.2"
+    testCompile "org.robolectric:robolectric:3.4-rc1"
     compile('com.crashlytics.sdk.android:crashlytics:2.6.8@aar') {
         transitive = true;
     }

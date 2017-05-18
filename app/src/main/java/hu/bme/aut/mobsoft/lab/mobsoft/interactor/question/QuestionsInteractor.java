@@ -17,18 +17,14 @@ import retrofit2.Response;
 import static hu.bme.aut.mobsoft.lab.mobsoft.MobSoftApplication.injector;
 
 public class QuestionsInteractor {
+    private Repository repository;
+    private EventBus bus;
+    private QuestionApi questionApi;
 
-    @Inject
-    Repository repository;
-
-    @Inject
-    EventBus bus;
-
-    @Inject
-    QuestionApi questionApi;
-
-    public QuestionsInteractor() {
-        injector.inject(this);
+    public QuestionsInteractor(Repository repository, EventBus bus, QuestionApi questionApi) {
+        this.repository = repository;
+        this.bus = bus;
+        this.questionApi = questionApi;
     }
 
     public void saveQuestion(Question question) {

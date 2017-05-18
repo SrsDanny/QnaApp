@@ -28,7 +28,8 @@ public class CreateNewAnswerTest {
     @Before
     public void setup(){
         setTestInjector();
-        presenter = new CreateNewAnswerPresenter();
+        //TODO
+        // presenter = new CreateNewAnswerPresenter();
         screen = mock(CreateNewAnswerScreen.class);
         presenter.attachScreen(screen);
     }

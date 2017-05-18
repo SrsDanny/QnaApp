@@ -10,6 +10,7 @@ import dagger.Provides;
 import hu.bme.aut.mobsoft.lab.mobsoft.network.AnswerApi;
 import hu.bme.aut.mobsoft.lab.mobsoft.network.NetworkModule;
 import hu.bme.aut.mobsoft.lab.mobsoft.network.QuestionApi;
+import hu.bme.aut.mobsoft.lab.mobsoft.repository.Repository;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 
@@ -25,9 +26,10 @@ public class MockNetworkModule {
     }
     @Provides
     @Singleton
-	public OkHttpClient provideOkHttpClient(OkHttpClient.Builder builder) {
-
-		builder.interceptors().add(new MockInterceptor());
+	public OkHttpClient provideOkHttpClient(OkHttpClient.Builder builder,
+                                            Gson gson,
+                                            Repository repository) {
+		builder.interceptors().add(new MockInterceptor(gson, repository));
 		return builder.build();
 	}
 

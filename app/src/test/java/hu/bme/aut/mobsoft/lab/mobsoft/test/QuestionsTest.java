@@ -39,7 +39,8 @@ public class QuestionsTest {
     @Before
     public void setup() throws Exception {
         setTestInjector();
-        questionsPresenter = new QuestionsPresenter();
+        //TODO
+        // questionsPresenter = new QuestionsPresenter();
         questionsScreen = mock(QuestionsScreen.class);
         questionsPresenter.attachScreen(questionsScreen);
         MockitoAnnotations.initMocks(this);

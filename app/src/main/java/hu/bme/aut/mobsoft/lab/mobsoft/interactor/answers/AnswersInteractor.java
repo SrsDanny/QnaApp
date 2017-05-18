@@ -21,20 +21,17 @@ import static hu.bme.aut.mobsoft.lab.mobsoft.MobSoftApplication.injector;
 
 public class AnswersInteractor {
 
-    @Inject
-    Repository repository;
+    private Repository repository;
+    private EventBus bus;
+    private AnswerApi answerApi;
+    private QuestionApi questionApi;
 
-    @Inject
-    EventBus bus;
-
-    @Inject
-    AnswerApi answerApi;
-
-    @Inject
-    QuestionApi questionApi;
-
-    public AnswersInteractor() {
-        injector.inject(this);
+    public AnswersInteractor(Repository repository, EventBus bus,
+                             AnswerApi answerApi, QuestionApi questionApi) {
+        this.repository = repository;
+        this.bus = bus;
+        this.answerApi = answerApi;
+        this.questionApi = questionApi;
     }
 
     public void saveAnswer(Answer answer){

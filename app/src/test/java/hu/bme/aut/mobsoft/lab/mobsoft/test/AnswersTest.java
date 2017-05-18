@@ -46,7 +46,8 @@ public class AnswersTest {
     @Before
     public void setup() {
         setTestInjector();
-        presenter = new AnswersPresenter();
+        //TODO
+        //presenter = new AnswersPresenter();
         screen = mock(AnswersScreen.class);
         presenter.attachScreen(screen);
         MockitoAnnotations.initMocks(this);

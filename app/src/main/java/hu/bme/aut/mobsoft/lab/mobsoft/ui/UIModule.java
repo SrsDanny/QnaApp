@@ -11,6 +11,8 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import hu.bme.aut.mobsoft.lab.mobsoft.interactor.answers.AnswersInteractor;
+import hu.bme.aut.mobsoft.lab.mobsoft.interactor.question.QuestionsInteractor;
 import hu.bme.aut.mobsoft.lab.mobsoft.ui.answers.create.CreateNewAnswerPresenter;
 import hu.bme.aut.mobsoft.lab.mobsoft.ui.answers.list.AnswersPresenter;
 import hu.bme.aut.mobsoft.lab.mobsoft.ui.questions.create.CreateNewQuestionPresenter;
@@ -31,26 +33,38 @@ public class UIModule {
 
     @Provides
     @Singleton
-    public CreateNewQuestionPresenter provideCreateNewQuestionPresenter() {
-        return new CreateNewQuestionPresenter();
+    public CreateNewQuestionPresenter provideCreateNewQuestionPresenter(
+            QuestionsInteractor questionsInteractor,
+            EventBus bus,
+            Executor executor) {
+        return new CreateNewQuestionPresenter(questionsInteractor, bus, executor);
     }
 
     @Provides
     @Singleton
-    public QuestionsPresenter provideQuestionsPresenter() {
-        return new QuestionsPresenter();
+    public QuestionsPresenter provideQuestionsPresenter(
+            Executor executor,
+            EventBus bus,
+            QuestionsInteractor questionsInteractor) {
+        return new QuestionsPresenter(executor, bus, questionsInteractor);
     }
 
     @Provides
     @Singleton
-    public CreateNewAnswerPresenter provideCreateNewAnswerPresenter() {
-        return new CreateNewAnswerPresenter();
+    public CreateNewAnswerPresenter provideCreateNewAnswerPresenter(
+            EventBus bus,
+            Executor executor,
+            AnswersInteractor answersInteractor) {
+        return new CreateNewAnswerPresenter(bus, executor, answersInteractor);
     }
 
     @Provides
     @Singleton
-    public AnswersPresenter provideAnswersPresenter() {
-        return new AnswersPresenter();
+    public AnswersPresenter provideAnswersPresenter(
+            Executor executor,
+            AnswersInteractor answersInteractor,
+            EventBus bus) {
+        return new AnswersPresenter(executor, answersInteractor, bus);
     }
 
     @Provides

@@ -26,7 +26,8 @@ public class CreateNewQuestionTest {
     @Before
     public void setup() {
         setTestInjector();
-        presenter = new CreateNewQuestionPresenter();
+        //TODO
+        // presenter = new CreateNewQuestionPresenter();
         screen = mock(CreateNewQuestionScreen.class);
         presenter.attachScreen(screen);
     }

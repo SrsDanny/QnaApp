@@ -18,8 +18,8 @@ import hu.bme.aut.mobsoft.lab.mobsoft.model.question.SortBy;
 
 public class MemoryRepository implements Repository {
 
-    BiMap<Long, Answer> answers;
-    BiMap<Long, Question> questions;
+    private BiMap<Long, Answer> answers;
+    private BiMap<Long, Question> questions;
 
     @Override
     public void open(Context context) {

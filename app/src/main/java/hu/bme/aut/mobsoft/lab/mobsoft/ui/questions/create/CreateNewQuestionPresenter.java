@@ -16,20 +16,22 @@ import hu.bme.aut.mobsoft.lab.mobsoft.ui.Presenter;
 import static hu.bme.aut.mobsoft.lab.mobsoft.MobSoftApplication.injector;
 
 public class CreateNewQuestionPresenter extends Presenter<CreateNewQuestionScreen> {
+    private QuestionsInteractor questionsInteractor;
+    private EventBus bus;
+    private Executor executor;
 
-    @Inject
-    QuestionsInteractor questionsInteractor;
-
-    @Inject
-    EventBus bus;
-
-    @Inject
-    Executor executor;
+    public CreateNewQuestionPresenter(
+            QuestionsInteractor questionsInteractor,
+            EventBus bus,
+            Executor executor) {
+        this.questionsInteractor = questionsInteractor;
+        this.bus = bus;
+        this.executor = executor;
+    }
 
     @Override
     public void attachScreen(CreateNewQuestionScreen screen) {
         super.attachScreen(screen);
-        injector.inject(this);
         bus.register(this);
     }
 

@@ -25,6 +25,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import dagger.android.AndroidInjection;
 import hu.bme.aut.mobsoft.lab.mobsoft.MobSoftApplication;
 import hu.bme.aut.mobsoft.lab.mobsoft.R;
 import hu.bme.aut.mobsoft.lab.mobsoft.model.answer.Answer;
@@ -58,10 +59,10 @@ public class AnswersActivity extends AppCompatActivity implements AnswersScreen,
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_answers);
         ButterKnife.bind(this);
-        MobSoftApplication.injector.inject(this);
 
         setSupportActionBar(toolbar);
 
