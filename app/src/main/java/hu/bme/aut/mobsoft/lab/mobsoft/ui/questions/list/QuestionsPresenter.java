@@ -4,14 +4,12 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.Executor;
 
 import javax.inject.Inject;
 
-import hu.bme.aut.mobsoft.lab.mobsoft.interactor.question.QuestionsInteractor;
+import hu.bme.aut.mobsoft.lab.mobsoft.interactor.QuestionsInteractor;
 import hu.bme.aut.mobsoft.lab.mobsoft.interactor.question.event.GetQuestionsEvent;
 import hu.bme.aut.mobsoft.lab.mobsoft.model.question.Question;
 import hu.bme.aut.mobsoft.lab.mobsoft.model.question.SortBy;

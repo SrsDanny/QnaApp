@@ -1,4 +1,4 @@
-package hu.bme.aut.mobsoft.lab.mobsoft.interactor.answers;
+package hu.bme.aut.mobsoft.lab.mobsoft.interactor;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -15,60 +15,32 @@ import hu.bme.aut.mobsoft.lab.mobsoft.model.question.Question;
 import hu.bme.aut.mobsoft.lab.mobsoft.network.AnswerApi;
 import hu.bme.aut.mobsoft.lab.mobsoft.network.QuestionApi;
 import hu.bme.aut.mobsoft.lab.mobsoft.repository.Repository;
+import io.reactivex.Completable;
 import retrofit2.Response;
 
 import static hu.bme.aut.mobsoft.lab.mobsoft.MobSoftApplication.injector;
 
 public class AnswersInteractor {
 
-    @Inject
-    Repository repository;
-
-    @Inject
-    EventBus bus;
-
-    @Inject
-    AnswerApi answerApi;
-
-    @Inject
-    QuestionApi questionApi;
+    @Inject Repository repository;
+    @Inject AnswerApi answerApi;
+    @Inject QuestionApi questionApi;
 
     public AnswersInteractor() {
         injector.inject(this);
     }
 
-    public void saveAnswer(Answer answer){
-        final SaveAnswerEvent event = new SaveAnswerEvent();
-        try {
-            final Response<Long> saveAnswerResponse = answerApi.createAnswer(answer).execute();
-            if(!saveAnswerResponse.isSuccessful()){
-                throw new Exception("Answer could not be created");
-            }
-
-            answer.setId(saveAnswerResponse.body());
-            repository.saveAnswer(answer);
-        } catch (Exception e) {
-            event.setThrowable(e);
-        }
-        bus.post(event);
+    public Completable saveAnswer(Answer answer) {
+        return answerApi.createAnswer(answer)
+                .doOnNext(answer::setId)
+                .doOnComplete(() -> repository.saveAnswer(answer))
+                .ignoreElements();
     }
 
-    public void rateAnswer(Rating rating) {
-        final RatingAppliedEvent event = new RatingAppliedEvent();
-        try {
-            final Response<Void> rateAnswerResponse = answerApi.rateAnswer(rating).execute();
-            if(!rateAnswerResponse.isSuccessful()) {
-                if(rateAnswerResponse.code() == 404)
-                    throw new IllegalArgumentException("Answer not found");
-                else
-                    throw new Exception("Could not rate answer, request unsuccessful");
-            }
-            repository.rateAnswer(rating);
-            event.setRating(rating);
-        } catch (Exception e) {
-            event.setThrowable(e);
-        }
-        bus.post(event);
+    public Completable rateAnswer(Rating rating) {
+        return answerApi.rateAnswer(rating)
+                .doOnComplete(() -> repository.rateAnswer(rating))
+                .ignoreElements();
     }
 
     public void getDetailsFor(long id) {
@@ -84,12 +56,12 @@ public class AnswersInteractor {
         bus.post(event);
     }
 
-    public void updateDetailsFor(long id){
+    public void updateDetailsFor(long id) {
         DetailsEvent event = new DetailsEvent();
-        try{
+        try {
             final Response<List<Answer>> answersResponse = answerApi.getAnswersForId(id).execute();
-            if(!answersResponse.isSuccessful()) {
-                if(answersResponse.code() == 404)
+            if (!answersResponse.isSuccessful()) {
+                if (answersResponse.code() == 404)
                     throw new IllegalArgumentException("Question not found for ID");
                 else
                     throw new Exception("Failed to get answers, request unsuccessful");
@@ -97,8 +69,8 @@ public class AnswersInteractor {
             final List<Answer> answers = answersResponse.body();
 
             final Response<Question> questionResponse = questionApi.getQuestionById(id).execute();
-            if(!questionResponse.isSuccessful()){
-                if(answersResponse.code() == 404)
+            if (!questionResponse.isSuccessful()) {
+                if (answersResponse.code() == 404)
                     throw new IllegalArgumentException("Question not found for ID");
                 else
                     throw new Exception("Failed to get question, request unsuccessful");

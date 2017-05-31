@@ -8,7 +8,7 @@ import java.util.concurrent.Executor;
 
 import javax.inject.Inject;
 
-import hu.bme.aut.mobsoft.lab.mobsoft.interactor.question.QuestionsInteractor;
+import hu.bme.aut.mobsoft.lab.mobsoft.interactor.QuestionsInteractor;
 import hu.bme.aut.mobsoft.lab.mobsoft.interactor.question.event.SaveQuestionEvent;
 import hu.bme.aut.mobsoft.lab.mobsoft.model.question.Question;
 import hu.bme.aut.mobsoft.lab.mobsoft.ui.Presenter;

@@ -1,6 +1,7 @@
 package hu.bme.aut.mobsoft.lab.mobsoft.network;
 
 import hu.bme.aut.mobsoft.lab.mobsoft.model.question.Question;
+import io.reactivex.Observable;
 import retrofit2.Call;
 import retrofit2.http.*;
 
@@ -15,7 +16,7 @@ public interface QuestionApi {
    */
 
   @GET("question")
-  Call<List<Question>> getQuestions();
+  Observable<List<Question>> getQuestions();
 
 
 
@@ -27,7 +28,7 @@ public interface QuestionApi {
    */
 
   @POST("question")
-  Call<Long> createQuestion(
+  Observable<Long> createQuestion(
           @Body Question body
   );
 
@@ -40,7 +41,7 @@ public interface QuestionApi {
    */
 
   @GET("question/{questionId}")
-  Call<Question> getQuestionById(
+  Observable<Question> getQuestionById(
           @Path("questionId") Long questionId
   );
 

@@ -2,6 +2,7 @@ package hu.bme.aut.mobsoft.lab.mobsoft.network;
 
 import hu.bme.aut.mobsoft.lab.mobsoft.model.answer.Answer;
 import hu.bme.aut.mobsoft.lab.mobsoft.model.answer.Rating;
+import io.reactivex.Observable;
 import retrofit2.Call;
 import retrofit2.http.*;
 
@@ -18,7 +19,7 @@ public interface AnswerApi {
    */
 
   @POST("answer")
-  Call<Long> createAnswer(
+  Observable<Long> createAnswer(
           @Body Answer body
   );
 
@@ -31,7 +32,7 @@ public interface AnswerApi {
    */
 
   @GET("answer/forQuestionId/{questionId}")
-  Call<List<Answer>> getAnswersForId(
+  Observable<List<Answer>> getAnswersForId(
           @Path("questionId") Long questionId
   );
 
@@ -44,7 +45,7 @@ public interface AnswerApi {
    */
 
   @POST("answer/rate")
-  Call<Void> rateAnswer(
+  Observable<Void> rateAnswer(
           @Body Rating body
   );
 

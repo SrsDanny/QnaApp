@@ -4,9 +4,8 @@ import javax.inject.Singleton;
 
 import dagger.Component;
 import hu.bme.aut.mobsoft.lab.mobsoft.interactor.InteractorModule;
-import hu.bme.aut.mobsoft.lab.mobsoft.interactor.answers.AnswersInteractor;
-import hu.bme.aut.mobsoft.lab.mobsoft.interactor.question.QuestionsInteractor;
-import hu.bme.aut.mobsoft.lab.mobsoft.network.NetworkModule;
+import hu.bme.aut.mobsoft.lab.mobsoft.interactor.AnswersInteractor;
+import hu.bme.aut.mobsoft.lab.mobsoft.interactor.QuestionsInteractor;
 import hu.bme.aut.mobsoft.lab.mobsoft.network.mock.MockInterceptor;
 import hu.bme.aut.mobsoft.lab.mobsoft.network.mock.MockNetworkModule;
 import hu.bme.aut.mobsoft.lab.mobsoft.repository.RepositoryModule;
@@ -19,10 +18,11 @@ import hu.bme.aut.mobsoft.lab.mobsoft.ui.questions.create.CreateNewQuestionActiv
 import hu.bme.aut.mobsoft.lab.mobsoft.ui.questions.create.CreateNewQuestionPresenter;
 import hu.bme.aut.mobsoft.lab.mobsoft.ui.questions.list.QuestionsActivity;
 import hu.bme.aut.mobsoft.lab.mobsoft.ui.questions.list.QuestionsPresenter;
+import hu.bme.aut.mobsoft.lab.mobsoft.util.SchedulerModule;
 
 @Singleton
 @Component(modules = {UIModule.class, RepositoryModule.class,
-        InteractorModule.class, MockNetworkModule.class})
+        InteractorModule.class, MockNetworkModule.class, SchedulerModule.class})
 public interface MobSoftApplicationComponent {
     void inject(MobSoftApplication mobSoftApplication);
 
