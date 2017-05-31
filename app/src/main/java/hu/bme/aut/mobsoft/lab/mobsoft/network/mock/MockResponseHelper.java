@@ -10,7 +10,7 @@ import okhttp3.ResponseBody;
 import okio.BufferedSource;
 import okio.Okio;
 
-class MockHelper {
+class MockResponseHelper {
 	static Response makeResponse(Request request, int code, final String content) {
 
 		return new Response.Builder()

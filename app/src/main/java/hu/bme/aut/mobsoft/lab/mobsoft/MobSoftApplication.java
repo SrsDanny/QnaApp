@@ -11,11 +11,11 @@ import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 
 import dagger.android.HasActivityInjector;
+import hu.bme.aut.mobsoft.lab.mobsoft.ui.PresentersModule;
 import io.fabric.sdk.android.Fabric;
 import javax.inject.Inject;
 
 import hu.bme.aut.mobsoft.lab.mobsoft.repository.Repository;
-import hu.bme.aut.mobsoft.lab.mobsoft.ui.UIModule;
 
 public class MobSoftApplication extends Application implements HasActivityInjector {
     @Inject DispatchingAndroidInjector<Activity> dispatchingAndroidInjector;
@@ -31,8 +31,8 @@ public class MobSoftApplication extends Application implements HasActivityInject
         Fabric.with(this, new Crashlytics());
         injector =
                 DaggerMobSoftApplicationComponent.builder().
-                        uIModule(
-                                new UIModule(this)
+                        presentersModule(
+                                new PresentersModule(this)
                         ).build();
 
         injector.inject(this);

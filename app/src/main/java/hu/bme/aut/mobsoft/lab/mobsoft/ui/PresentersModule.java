@@ -19,10 +19,10 @@ import hu.bme.aut.mobsoft.lab.mobsoft.ui.questions.create.CreateNewQuestionPrese
 import hu.bme.aut.mobsoft.lab.mobsoft.ui.questions.list.QuestionsPresenter;
 
 @Module
-public class UIModule {
+public class PresentersModule {
     private Context context;
 
-    public UIModule(Context context) {
+    public PresentersModule(Context context) {
         this.context = context;
     }
 
@@ -71,11 +71,5 @@ public class UIModule {
     @Singleton
     public EventBus provideEventBus() {
         return EventBus.getDefault();
-    }
-
-    @Provides
-    @Singleton
-    public Executor provideExecutor() {
-        return Executors.newFixedThreadPool(1);
     }
 }

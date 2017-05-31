@@ -12,18 +12,15 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.inject.Inject;
-
 import hu.bme.aut.mobsoft.lab.mobsoft.model.answer.Answer;
 import hu.bme.aut.mobsoft.lab.mobsoft.model.question.Question;
 import hu.bme.aut.mobsoft.lab.mobsoft.network.NetworkConfig;
-import hu.bme.aut.mobsoft.lab.mobsoft.repository.MemoryRepository;
 import hu.bme.aut.mobsoft.lab.mobsoft.repository.Repository;
 import okhttp3.Interceptor;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
-
-import static hu.bme.aut.mobsoft.lab.mobsoft.MobSoftApplication.injector;
+import okio.Buffer;
 
 public class MockInterceptor implements Interceptor {
 
@@ -44,71 +41,68 @@ public class MockInterceptor implements Interceptor {
     public Response intercept(@NonNull Chain chain) throws IOException {
         final Request request = chain.request();
         final Uri uri = Uri.parse(request.url().toString());
+        final String uriPath = uri.getPath();
+        final Buffer buffer = new Buffer();
+        final RequestBody body = request.body();
+        final String bodyStr;
+        if(body != null) {
+            body.writeTo(buffer);
+            bodyStr = buffer.readUtf8();
+        } else {
+            bodyStr = null;
+        }
+
 
         Log.d("Test Http Client", "URL call: " + uri.toString());
 
-        if (uri.getPath().startsWith(NetworkConfig.ENDPOINT_PREFIX + "question")) {
-            return processQuestionRequest(request);
-        }
-        if (uri.getPath().startsWith(NetworkConfig.ENDPOINT_PREFIX + "answer")) {
-            return processAnswerRequest(request);
-        }
-
-        return MockHelper.makeResponse(request, 400, "Unknown");
-    }
-
-    private Response processQuestionRequest(Request request) {
-        final Uri uri = Uri.parse(request.url().toString());
-        final String uriPath = uri.getPath();
-
         if(uriPath.equals(NetworkConfig.ENDPOINT_PREFIX + "question")
                 && request.method().equals("POST")){
-            return MockHelper.makeResponse(request, 201, "42");
+            final Question question = gson.fromJson(bodyStr, Question.class);
+            final long questionId = repository.saveQuestion(question);
+            return MockResponseHelper.makeResponse(request, 201, String.valueOf(questionId));
         }
 
         if(uriPath.equals(NetworkConfig.ENDPOINT_PREFIX + "question")
                 && request.method().equals("GET")){
             final List<Question> questions = repository.getQuestions(null, null);
             final String responseString = gson.toJson(questions);
-
-            return MockHelper.makeResponse(request, 200, responseString);
+            return MockResponseHelper.makeResponse(request, 200, responseString);
         }
 
         Matcher matcher = getQuestionByIdPattern.matcher(uriPath);
         if(matcher.matches() && request.method().equals("GET")) {
             final Question question = repository.getQuestion(Long.valueOf(matcher.group(1)));
             final String responseString = gson.toJson(question);
-
-            return MockHelper.makeResponse(request, 200, responseString);
+            return MockResponseHelper.makeResponse(request, 200, responseString);
         }
-
-        return MockHelper.makeResponse(request, 400, "Unknown operation");
-    }
-
-    private Response processAnswerRequest(Request request) {
-        final Uri uri = Uri.parse(request.url().toString());
-        final String uriPath = uri.getPath();
 
         if(uriPath.equals(NetworkConfig.ENDPOINT_PREFIX + "answer")
                 && request.method().equals("POST")){
-            return MockHelper.makeResponse(request, 201, "1337");
+            final Answer answer = gson.fromJson(bodyStr, Answer.class);
+
+            try {
+                final long answerId = repository.saveAnswer(answer);
+                return MockResponseHelper.makeResponse(request, 201, String.valueOf(answerId));
+            } catch (IllegalArgumentException e) {
+                return MockResponseHelper.makeResponse(request, 404, "");
+            }
         }
 
         if(uriPath.equals(NetworkConfig.ENDPOINT_PREFIX + "answer/rate")
                 && request.method().equals("POST")){
-            return MockHelper.makeResponse(request, 200, "");
+            return MockResponseHelper.makeResponse(request, 200, "");
         }
 
-        Matcher matcher = getAnswersByQuestionIdPattern.matcher(uriPath);
+        matcher = getAnswersByQuestionIdPattern.matcher(uriPath);
         if(matcher.matches() && request.method().equals("GET")){
             final long id = Long.valueOf(matcher.group(1));
             final List<Answer> answers = repository.getAnswersForId(id);
             final String responseString = gson.toJson(answers);
 
-            return MockHelper.makeResponse(request, 200, responseString);
+            return MockResponseHelper.makeResponse(request, 200, responseString);
         }
 
-        return MockHelper.makeResponse(request, 400, "Unknown operation");
+        return MockResponseHelper.makeResponse(request, 400, "Unknown operation");
     }
 
 

@@ -31,6 +31,15 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+android.applicationVariants.all {
+    def aptOutputDir = new File(buildDir, "generated/source/apt/${it.unitTestVariant.dirName}")
+    it.unitTestVariant.addJavaSourceFoldersToModel(aptOutputDir)
 }
 
 dependencies {
@@ -45,11 +54,12 @@ dependencies {
     // Dagger 2
     annotationProcessor "com.google.dagger:dagger-compiler:2.11-rc2"
     testAnnotationProcessor "com.google.dagger:dagger-compiler:2.11-rc2"
-    androidTestAnnotationProcessor "com.google.dagger:dagger-compiler:2.11-rc2"
     compile 'com.google.dagger:dagger:2.11-rc2'
+    testCompile 'com.google.dagger:dagger:2.11-rc2'
     compile 'com.google.dagger:dagger-android:2.11-rc2'
     compile 'com.google.dagger:dagger-android-support:2.11-rc2'
     annotationProcessor 'com.google.dagger:dagger-android-processor:2.11-rc2'
+    testAnnotationProcessor 'com.google.dagger:dagger-android-processor:2.11-rc2'
     // Required for @Generated annotation (missing in Java <= 1.6; therefore, Android)
     provided 'javax.annotation:jsr250-api:1.0'
 
@@ -75,6 +85,6 @@ dependencies {
         transitive = true;
     }
 
-    compile 'com.google.android.gms:play-services-analytics:10.2.4'
+    compile 'com.google.android.gms:play-services-analytics:10.2.6'
 }
 apply plugin: 'com.google.gms.google-services'
