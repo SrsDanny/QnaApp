@@ -3,21 +3,16 @@ package hu.bme.aut.mobsoft.lab.mobsoft.test;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.MockitoAnnotations;
-import org.robolectric.annotation.Config;
 
 import java.util.List;
 
-import hu.bme.aut.mobsoft.lab.mobsoft.BuildConfig;
 import hu.bme.aut.mobsoft.lab.mobsoft.model.question.Question;
 import hu.bme.aut.mobsoft.lab.mobsoft.ui.questions.list.QuestionsPresenter;
 import hu.bme.aut.mobsoft.lab.mobsoft.ui.questions.list.QuestionsScreen;
-import hu.bme.aut.mobsoft.lab.mobsoft.utils.RobolectricDaggerTestRunner;
 
-import static hu.bme.aut.mobsoft.lab.mobsoft.TestHelper.setTestInjector;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -26,8 +21,6 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.internal.verification.VerificationModeFactory.times;
 
-@RunWith(RobolectricDaggerTestRunner.class)
-@Config(constants = BuildConfig.class, sdk = 21)
 public class QuestionsTest {
 
     private QuestionsPresenter questionsPresenter;
@@ -38,8 +31,8 @@ public class QuestionsTest {
 
     @Before
     public void setup() throws Exception {
-        setTestInjector();
-        questionsPresenter = new QuestionsPresenter();
+        //TODO
+        // questionsPresenter = new QuestionsPresenter();
         questionsScreen = mock(QuestionsScreen.class);
         questionsPresenter.attachScreen(questionsScreen);
         MockitoAnnotations.initMocks(this);

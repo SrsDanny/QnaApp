@@ -1,16 +1,12 @@
 package hu.bme.aut.mobsoft.lab.mobsoft.repository;
 
 import android.content.Context;
-
-import com.google.common.collect.BiMap;
-import com.google.common.collect.HashBiMap;
+import android.support.v4.util.LongSparseArray;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.NoSuchElementException;
 
 import hu.bme.aut.mobsoft.lab.mobsoft.model.answer.Answer;
@@ -20,14 +16,20 @@ import hu.bme.aut.mobsoft.lab.mobsoft.model.question.SortBy;
 
 public class MemoryRepository implements Repository {
 
-    BiMap<Long, Answer> answers;
-    BiMap<Long, Question> questions;
+    private List<Answer> answers;
+    private List<Question> questions;
+
+    public MemoryRepository() {
+        questions = new ArrayList<>();
+        answers = new ArrayList<>();
+    }
 
     @Override
     public void open(Context context) {
-        questions = HashBiMap.create();
-        answers = HashBiMap.create();
+        fillWithTestData();
+    }
 
+    private void fillWithTestData() {
         long id;
         Answer answer;
 
@@ -57,124 +59,41 @@ public class MemoryRepository implements Repository {
 
     @Override
     public long saveQuestion(Question question) {
-        Long id = question.getId();
-        if(id == null)
-            id = questions.inverse().get(question);
-        if(id == null) {
-            try {
-                id = Collections.max(questions.keySet()) + 1;
-            } catch (NoSuchElementException e) {
-                id = 0L;
-            }
-        }
-        question.setId(id);
-        //noinspection ResultOfMethodCallIgnored
-        questions.forcePut(id, question);
-        return id;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Question getQuestion(long id) {
-        return questions.get(id);
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public List<Question> getQuestions(String query, final SortBy sortBy) {
-        List<Question> returnQuestions;
-
-        if(query != null && !query.isEmpty()) {
-            returnQuestions = new ArrayList<>();
-            for(Question question : questions.values()) {
-                if(question.getTitle().toLowerCase().contains(query.toLowerCase())
-                        || question.getDescription().toLowerCase().contains(query.toLowerCase())) {
-                    returnQuestions.add(question);
-                }
-            }
-        } else {
-            returnQuestions = new ArrayList<>(questions.values());
-        }
-
-        if(sortBy != null) {
-            Collections.sort(returnQuestions, new Comparator<Question>() {
-                @Override
-                public int compare(Question o1, Question o2) {
-                    switch (sortBy.getWhat()) {
-                        case TITLE:
-                            if(sortBy.isAscending()) {
-                                return o1.getTitle().compareTo(o2.getTitle());
-                            } else {
-                                return o2.getTitle().compareTo(o1.getTitle());
-                            }
-                        case NUMBER_OF_ANSWERS:
-                            if(sortBy.isAscending()) {
-                                return o1.getNumberOfAnswers() - o2.getNumberOfAnswers();
-                            } else {
-                                return o2.getNumberOfAnswers() - o1.getNumberOfAnswers();
-                            }
-                    }
-                    return 0;
-                }
-            });
-        }
-
-        return returnQuestions;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void saveQuestions(List<Question> newQuestions) {
-        for(Question newQuestion : newQuestions) {
-            //noinspection ResultOfMethodCallIgnored
-            questions.forcePut(newQuestion.getId(), newQuestion);
-        }
+        throw new UnsupportedOperationException();
     }
 
     @Override
-    public void saveAnswer(Answer answer) {
-        Question question = questions.get(answer.getQuestionId());
-        if(question == null)
-            throw new IllegalArgumentException("Question could not be found for answer!");
-        question.increaseNumberOfAnswers();
-
-        Long id = answer.getId();
-        if(id == null)
-            id = answers.inverse().get(answer);
-        if(id == null){
-            try {
-                id = Collections.max(answers.keySet()) + 1;
-            } catch (NoSuchElementException e) {
-                id = 0L;
-            }
-        }
-        answer.setId(id);
-        //noinspection ResultOfMethodCallIgnored
-        answers.forcePut(id, answer);
+    public long saveAnswer(Answer answer) {
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public List<Answer> getAnswersForId(long id) {
-        List<Answer> returnAnswers = new ArrayList<>();
-        for(Answer answer : answers.values()) {
-            if(answer.getQuestionId() == id) {
-                returnAnswers.add(answer);
-            }
-        }
-        return returnAnswers;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void saveAnswers(List<Answer> newAnswers) {
-        for(Answer newAnswer : newAnswers){
-            //noinspection ResultOfMethodCallIgnored
-            answers.forcePut(newAnswer.getId(), newAnswer);
-        }
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void rateAnswer(Rating rating) {
-        Answer answer = answers.get(rating.getAnswerId());
-        if(answer == null)
-            throw new IllegalArgumentException("Answer with given ID does not exist");
-
-        answer.addRating(rating.getVote());
+        throw new UnsupportedOperationException();
     }
 }

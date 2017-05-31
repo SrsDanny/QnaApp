@@ -1,21 +1,25 @@
 package hu.bme.aut.mobsoft.lab.mobsoft;
 
+import android.app.Activity;
 import android.app.Application;
 
 import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 
+import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
+
+import dagger.android.HasActivityInjector;
+import hu.bme.aut.mobsoft.lab.mobsoft.ui.PresentersModule;
 import io.fabric.sdk.android.Fabric;
 import javax.inject.Inject;
 
 import hu.bme.aut.mobsoft.lab.mobsoft.repository.Repository;
-import hu.bme.aut.mobsoft.lab.mobsoft.ui.UIModule;
 
-public class MobSoftApplication extends Application {
-
-    @Inject
-    Repository repository;
+public class MobSoftApplication extends Application implements HasActivityInjector {
+    @Inject DispatchingAndroidInjector<Activity> dispatchingAndroidInjector;
+    @Inject Repository repository;
 
     public static MobSoftApplicationComponent injector;
 
@@ -25,11 +29,10 @@ public class MobSoftApplication extends Application {
     public void onCreate() {
         super.onCreate();
         Fabric.with(this, new Crashlytics());
-
         injector =
                 DaggerMobSoftApplicationComponent.builder().
-                        uIModule(
-                                new UIModule(this)
+                        presentersModule(
+                                new PresentersModule(this)
                         ).build();
 
         injector.inject(this);
@@ -60,5 +63,10 @@ public class MobSoftApplication extends Application {
             mTracker = analytics.newTracker(R.xml.global_tracker);
         }
         return mTracker;
+    }
+
+    @Override
+    public AndroidInjector<Activity> activityInjector() {
+        return dispatchingAndroidInjector;
     }
 }

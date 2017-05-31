@@ -1,19 +1,16 @@
 package hu.bme.aut.mobsoft.lab.mobsoft.network.mock;
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 
-import okhttp3.Headers;
 import okhttp3.MediaType;
 import okhttp3.Protocol;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
-import okio.Buffer;
 import okio.BufferedSource;
 import okio.Okio;
 
-class MockHelper {
+class MockResponseHelper {
 	static Response makeResponse(Request request, int code, final String content) {
 
 		return new Response.Builder()

@@ -9,7 +9,6 @@ import com.orm.query.Select;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import hu.bme.aut.mobsoft.lab.mobsoft.model.answer.Answer;
 import hu.bme.aut.mobsoft.lab.mobsoft.model.answer.Rating;
@@ -62,13 +61,16 @@ public class SugarOrmRepository implements Repository {
     }
 
     @Override
-    public void saveAnswer(Answer answer) {
-        Question question = SugarRecord.findById(Question.class, answer.getQuestionId());
+    public long saveAnswer(Answer answer) {
+        final Question question = SugarRecord.findById(Question.class, answer.getQuestionId());
+        if(question == null)
+            throw new IllegalArgumentException("Question not found");
         question.increaseNumberOfAnswers();
         ArrayList<Object> objectsToSave = new ArrayList<>(2);
         objectsToSave.add(question);
         objectsToSave.add(answer);
         SugarRecord.saveInTx(objectsToSave);
+        return answer.getId();
     }
 
     @Override

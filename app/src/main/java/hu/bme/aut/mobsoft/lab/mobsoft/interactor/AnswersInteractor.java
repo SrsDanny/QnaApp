@@ -1,14 +1,8 @@
 package hu.bme.aut.mobsoft.lab.mobsoft.interactor;
 
-import org.greenrobot.eventbus.EventBus;
-
 import java.util.List;
 
-import javax.inject.Inject;
-
 import hu.bme.aut.mobsoft.lab.mobsoft.interactor.answers.event.DetailsEvent;
-import hu.bme.aut.mobsoft.lab.mobsoft.interactor.answers.event.RatingAppliedEvent;
-import hu.bme.aut.mobsoft.lab.mobsoft.interactor.answers.event.SaveAnswerEvent;
 import hu.bme.aut.mobsoft.lab.mobsoft.model.answer.Answer;
 import hu.bme.aut.mobsoft.lab.mobsoft.model.answer.Rating;
 import hu.bme.aut.mobsoft.lab.mobsoft.model.question.Question;
@@ -18,16 +12,16 @@ import hu.bme.aut.mobsoft.lab.mobsoft.repository.Repository;
 import io.reactivex.Completable;
 import retrofit2.Response;
 
-import static hu.bme.aut.mobsoft.lab.mobsoft.MobSoftApplication.injector;
-
 public class AnswersInteractor {
 
-    @Inject Repository repository;
-    @Inject AnswerApi answerApi;
-    @Inject QuestionApi questionApi;
+    private Repository repository;
+    private AnswerApi answerApi;
+    private QuestionApi questionApi;
 
-    public AnswersInteractor() {
-        injector.inject(this);
+    public AnswersInteractor(Repository repository, AnswerApi answerApi, QuestionApi questionApi) {
+        this.repository = repository;
+        this.answerApi = answerApi;
+        this.questionApi = questionApi;
     }
 
     public Completable saveAnswer(Answer answer) {

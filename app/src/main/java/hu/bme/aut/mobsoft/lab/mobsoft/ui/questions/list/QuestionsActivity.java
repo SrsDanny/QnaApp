@@ -1,8 +1,10 @@
 package hu.bme.aut.mobsoft.lab.mobsoft.ui.questions.list;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
@@ -30,11 +32,11 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import dagger.android.AndroidInjection;
 import hu.bme.aut.mobsoft.lab.mobsoft.MobSoftApplication;
 import hu.bme.aut.mobsoft.lab.mobsoft.R;
 import hu.bme.aut.mobsoft.lab.mobsoft.model.question.Question;
 import hu.bme.aut.mobsoft.lab.mobsoft.model.question.SortBy;
-import hu.bme.aut.mobsoft.lab.mobsoft.ui.answers.create.CreateNewAnswerActivity;
 import hu.bme.aut.mobsoft.lab.mobsoft.ui.answers.list.AnswersActivity;
 import hu.bme.aut.mobsoft.lab.mobsoft.ui.questions.create.CreateNewQuestionActivity;
 
@@ -63,10 +65,10 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsScr
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_questions);
         ButterKnife.bind(this);
-        MobSoftApplication.injector.inject(this);
 
         setSupportActionBar(toolbar);
 
@@ -153,8 +155,17 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsScr
         getMenuInflater().inflate(R.menu.questions_menu, menu);
         final View actionView = menu.findItem(R.id.sortAction).getActionView();
         sortSpinner = (Spinner) actionView.findViewById(R.id.sort_spinner);
+
+        final Context actionBarContext;
+        final ActionBar actionBar = getSupportActionBar();
+        if(actionBar == null) {
+            actionBarContext = this;
+        } else {
+            actionBarContext = actionBar.getThemedContext();
+        }
+
         final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
-                getSupportActionBar().getThemedContext(), R.array.sort_spinner_values, android.R.layout.simple_spinner_item);
+                actionBarContext, R.array.sort_spinner_values, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sortSpinner.setAdapter(adapter);
         ascendingCheckBox = (CheckBox) actionView.findViewById(R.id.ascending_checkbox);

@@ -2,8 +2,6 @@ package hu.bme.aut.mobsoft.lab.mobsoft.model.question;
 
 import com.orm.dsl.Table;
 
-import java.util.Objects;
-
 @Table
 public class Question {
     private Long id = null;

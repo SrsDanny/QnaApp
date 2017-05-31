@@ -16,6 +16,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import dagger.android.AndroidInjection;
 import hu.bme.aut.mobsoft.lab.mobsoft.MobSoftApplication;
 import hu.bme.aut.mobsoft.lab.mobsoft.R;
 import hu.bme.aut.mobsoft.lab.mobsoft.model.question.Question;
@@ -36,10 +37,10 @@ public class CreateNewQuestionActivity extends AppCompatActivity implements Crea
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_new);
         ButterKnife.bind(this);
-        MobSoftApplication.injector.inject(this);
 
         setSupportActionBar(toolbar);
 

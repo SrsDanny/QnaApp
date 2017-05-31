@@ -1,7 +1,5 @@
 package hu.bme.aut.mobsoft.lab.mobsoft.interactor;
 
-import javax.inject.Inject;
-
 import hu.bme.aut.mobsoft.lab.mobsoft.model.question.Question;
 import hu.bme.aut.mobsoft.lab.mobsoft.model.question.QuestionComparator;
 import hu.bme.aut.mobsoft.lab.mobsoft.model.question.SortBy;
@@ -10,15 +8,14 @@ import hu.bme.aut.mobsoft.lab.mobsoft.repository.Repository;
 import io.reactivex.Completable;
 import io.reactivex.Observable;
 
-import static hu.bme.aut.mobsoft.lab.mobsoft.MobSoftApplication.injector;
-
 public class QuestionsInteractor {
 
-    @Inject Repository repository;
-    @Inject QuestionApi questionApi;
+    private Repository repository;
+    private QuestionApi questionApi;
 
-    public QuestionsInteractor() {
-        injector.inject(this);
+    public QuestionsInteractor(Repository repository, QuestionApi questionApi) {
+        this.repository = repository;
+        this.questionApi = questionApi;
     }
 
     public Completable saveQuestion(final Question question) {

@@ -6,16 +6,10 @@ import android.support.annotation.NonNull;
 
 import java.util.concurrent.Executor;
 
-public class UiExecutor implements Executor {
-
-	private Handler mHandler;
-
-	public UiExecutor() {
-		mHandler = new Handler(Looper.getMainLooper());
-	}
+public class SimpleExecutor implements Executor {
 
 	@Override
 	public void execute(@NonNull Runnable command) {
-		mHandler.post(command);
+		command.run();
 	}
 }

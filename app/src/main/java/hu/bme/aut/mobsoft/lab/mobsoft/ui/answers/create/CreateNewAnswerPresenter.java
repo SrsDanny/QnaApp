@@ -16,20 +16,20 @@ import hu.bme.aut.mobsoft.lab.mobsoft.ui.Presenter;
 import static hu.bme.aut.mobsoft.lab.mobsoft.MobSoftApplication.injector;
 
 public class CreateNewAnswerPresenter extends Presenter<CreateNewAnswerScreen> {
+    private EventBus bus;
+    private Executor executor;
+    private AnswersInteractor answersInteractor;
 
-    @Inject
-    EventBus bus;
-
-    @Inject
-    Executor executor;
-
-    @Inject
-    AnswersInteractor answersInteractor;
+    public CreateNewAnswerPresenter(EventBus bus, Executor executor,
+                                    AnswersInteractor answersInteractor) {
+        this.bus = bus;
+        this.executor = executor;
+        this.answersInteractor = answersInteractor;
+    }
 
     @Override
     public void attachScreen(CreateNewAnswerScreen screen) {
         super.attachScreen(screen);
-        injector.inject(this);
         bus.register(this);
     }
 
@@ -51,7 +51,7 @@ public class CreateNewAnswerPresenter extends Presenter<CreateNewAnswerScreen> {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onSaveAnswerEvent(SaveAnswerEvent event) {
         if(event.getThrowable() != null) {
-            event.getThrowable().printStackTrace();;
+            event.getThrowable().printStackTrace();
             if(screen != null) {
                 screen.showMessage("error: " + event.getThrowable().getLocalizedMessage());
             }
